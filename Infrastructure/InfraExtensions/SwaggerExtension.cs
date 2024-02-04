@@ -2,7 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 
-namespace Infrastructure;
+namespace Infrastructure.InfraExtensions;
 
 public static class SwaggerExtension
 {

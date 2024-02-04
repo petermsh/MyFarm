@@ -1,14 +1,13 @@
-﻿using Application.Farms.Queries.GetFarm;
+﻿using System.Reflection;
 using Domain.Repositories;
 using Infrastructure.Farms.Queries;
 using Infrastructure.Farms.Repository;
+using Infrastructure.InfraExtensions;
 using Infrastructure.Middleware;
 using Infrastructure.Persistence;
-using Infrastructure.Persistence.Options;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.OpenApi.Models;
 
 namespace Infrastructure;
 
@@ -19,15 +18,16 @@ public static class Extensions
         services.AddControllers();
         services.AddSingleton<ExceptionMiddleware>();
         services.AddHttpContextAccessor();
-        
-        
+
+        services.AddIdentity(configuration);
         services.AddPostgres(configuration);
         
         services.AddEndpointsApiExplorer();
         services.AddSwagger();
         
         services.AddScoped<IFarmRepository, FarmRepository>();
-        services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(GetFarmHandler).Assembly));
+        
+        services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
         
         return services;
     }

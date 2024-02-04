@@ -21,5 +21,7 @@ internal sealed class UpdateFarmHandler : IRequestHandler<UpdateFarmCommand>
             throw new FarmNotFoundException(request.Id);
         
         farm.Update(request.Address);
+
+        await _farmRepository.SaveChangesAsync(farm, cancellationToken);
     }
 }

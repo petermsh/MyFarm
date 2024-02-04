@@ -1,11 +1,13 @@
 ﻿using Domain.Entities;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Persistence;
 
-public sealed class MyFarmDbContext : DbContext
+public sealed class MyFarmDbContext : IdentityDbContext<User, IdentityRole<Guid>, Guid>
 {
-    public MyFarmDbContext(DbContextOptions<MyFarmDbContext> options) : base(options)
+    public MyFarmDbContext(DbContextOptions options) : base(options)
     {
     }
     
