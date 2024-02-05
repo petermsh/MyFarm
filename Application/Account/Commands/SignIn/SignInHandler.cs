@@ -21,7 +21,7 @@ public class SignInHandler : IRequestHandler<SignInCommand, SignInResponse>
     public async Task<SignInResponse> Handle(SignInCommand request, CancellationToken cancellationToken)
     {
         var user = await _userManager.Users
-            .SingleOrDefaultAsync(u => u.Email == request.Login, cancellationToken);
+            .SingleOrDefaultAsync(u => u.Email == request.Email, cancellationToken);
 
         if (user is null)
             throw new UserNotFoundException();
@@ -33,7 +33,7 @@ public class SignInHandler : IRequestHandler<SignInCommand, SignInResponse>
 
         return new SignInResponse
         {
-            Username = request.Login,
+            Username = user.UserName,
             Token = _tokenService.CreateToken(user)
         };
     }

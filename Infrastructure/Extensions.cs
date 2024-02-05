@@ -29,6 +29,19 @@ public static class Extensions
         
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
         
+        services.AddCors(o =>
+        {
+            o.AddPolicy("CorsPolicy", policy =>
+            {
+                policy
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .AllowCredentials()
+                    .WithOrigins("http://localhost:3000")
+                    .SetIsOriginAllowed((host) => true);;
+            });
+        });
+        
         return services;
     }
 
@@ -37,6 +50,7 @@ public static class Extensions
         app.UseMiddleware<ExceptionMiddleware>();
         app.UseSwagger();
         app.UseSwaggerUI();
+        app.UseCors("CorsPolicy");
         
         app.UseAuthentication();
         app.UseAuthorization();
