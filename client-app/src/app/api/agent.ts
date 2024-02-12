@@ -71,6 +71,7 @@ const requests = {
 
 const Farms = {
     list: () => requests.get<Farm[]>('/farms'),
+    details: (id: string) => requests.get<Farm>(`/farms/${id}`),
 }
 
 const Account = {

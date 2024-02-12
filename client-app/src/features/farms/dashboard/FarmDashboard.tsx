@@ -12,10 +12,9 @@ export default observer(function FarmDashboard() {
     const {loadFarms, farmRegistry} = farmStore;
 
     useEffect(() => {
-        if (farmRegistry.size === 0) loadFarms();
+        if (farmRegistry.size <= 1) loadFarms();
     }, [loadFarms, farmRegistry.size])
-
-    console.log(farmStore.loadingInitial);
+    
     if (farmStore.loadingInitial) return <LoadingComponent content='Loading farms...' />
 
     return (

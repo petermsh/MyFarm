@@ -17,7 +17,6 @@ export default class UserStore {
     
     login = async(creds: UserFormValues) => {
         const user = await agent.Account.login(creds);
-        console.log(user);
         store.commonStore.setToken(user.token);
         runInAction(() => this.user = user);
         await router.navigate('/farms');
