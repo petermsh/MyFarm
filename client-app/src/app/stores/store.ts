@@ -2,18 +2,21 @@
 import {createContext, useContext} from "react";
 import UserStore from "./userStore";
 import ModalStore from "./modalStores";
+import FarmStore from "./farmStore";
 
 
 interface Store {
     commonStore: CommonStore;
     userStore: UserStore;
     modalStore: ModalStore;
+    farmStore : FarmStore;
 }
 
 export const store: Store = {
     commonStore: new CommonStore(),
     userStore: new UserStore(),
     modalStore: new ModalStore(),
+    farmStore: new FarmStore(),
 }
 
 export const StoreContext = createContext(store);

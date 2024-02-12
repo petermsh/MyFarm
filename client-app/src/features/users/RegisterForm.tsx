@@ -26,7 +26,7 @@ export default observer(function RegisterForm() {
                     <MyTextInput placeholder={"Password"} name={'password'} type={'password'} />
                     <ErrorMessage name={'error'} render={() => <ValidationError errors={errors.error as unknown as string[]} />} />
                     <Button loading={isSubmitting} 
-                            positive content={"Login"} 
+                            positive content={"Register"} 
                             type={"submit"} fluid
                             disabled={!isValid || !dirty || isSubmitting} />
                 </Form>

@@ -2,4 +2,4 @@
 
 namespace Application.Farms.Queries.BrowseFarms;
 
-public record BrowseFarmsQuery() : IRequest<BrowseFarmsResponse>;
+public record BrowseFarmsQuery() : IRequest<List<FarmsDto>>;

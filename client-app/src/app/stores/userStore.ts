@@ -17,9 +17,10 @@ export default class UserStore {
     
     login = async(creds: UserFormValues) => {
         const user = await agent.Account.login(creds);
+        console.log(user);
         store.commonStore.setToken(user.token);
         runInAction(() => this.user = user);
-        router.navigate('/farms');
+        await router.navigate('/farms');
         store.modalStore.closeModal();
     }
 
@@ -27,7 +28,7 @@ export default class UserStore {
         const user = await agent.Account.register(creds);
         store.commonStore.setToken(user.token);
         runInAction(() => this.user = user);
-        router.navigate('/farms');
+        await router.navigate('/farms');
         store.modalStore.closeModal();
     }
 
@@ -36,5 +37,10 @@ export default class UserStore {
         store.commonStore.setToken(null);
         this.user = null;
         router.navigate('/');
+    }
+
+    getUser = async () => {
+        const user = await agent.Account.current();
+        runInAction(() => this.user = user);
     }
 }

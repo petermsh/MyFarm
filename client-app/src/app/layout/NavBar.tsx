@@ -11,6 +11,7 @@ export default observer(function NavBar() {
         <Menu inverted fixed='top'>
             <Container>
                 <Menu.Item as={NavLink} to='/' header>
+                    <img src="/assets/harvest.png" alt="logo" style={{marginRight: '10px'}}/>
                     MyFarm
                 </Menu.Item>
                 <Menu.Item as={NavLink} to='/farms' name='Farms'/>

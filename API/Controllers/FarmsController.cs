@@ -21,7 +21,7 @@ public sealed class FarmsController : BaseApiController
     
     [HttpGet]
     [SwaggerOperation(Summary = "Browse Farms")]
-    public async Task<ActionResult<BrowseFarmsResponse>> BrowseFarms()
+    public async Task<ActionResult<List<FarmsDto>>> BrowseFarms()
     {
         var result = await Mediator.Send(new BrowseFarmsQuery());
 

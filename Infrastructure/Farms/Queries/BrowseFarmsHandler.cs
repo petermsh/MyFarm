@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Farms.Queries;
 
-public class BrowseFarmsHandler : IRequestHandler<BrowseFarmsQuery, BrowseFarmsResponse>
+public class BrowseFarmsHandler : IRequestHandler<BrowseFarmsQuery, List<FarmsDto>>
 {
     private readonly MyFarmDbContext _dbContext;
 
@@ -14,15 +14,15 @@ public class BrowseFarmsHandler : IRequestHandler<BrowseFarmsQuery, BrowseFarmsR
         _dbContext = dbContext;
     }
 
-    public async Task<BrowseFarmsResponse> Handle(BrowseFarmsQuery request, CancellationToken cancellationToken)
+    public async Task<List<FarmsDto>> Handle(BrowseFarmsQuery request, CancellationToken cancellationToken)
     {
         var farms = await _dbContext.Farms
-            .Select(f => new BrowseFarmsResponse.Farms()
+            .Select(f => new FarmsDto()
             {
                 Id = f.Id,
                 Address = f.Address
             }).ToListAsync(cancellationToken);
 
-        return new BrowseFarmsResponse(farms);
+        return farms;
     }
 }
