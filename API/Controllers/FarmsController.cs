@@ -30,7 +30,7 @@ public sealed class FarmsController : BaseApiController
     
     [HttpPost]
     [SwaggerOperation(Summary = "Create Farm")]
-    public async Task<ActionResult<CreateFarmResponse>> CreateFarm([FromQuery] CreateFarmCommand command)
+    public async Task<ActionResult<CreateFarmResponse>> CreateFarm(CreateFarmCommand command)
     {
         var result = await Mediator.Send(command);
 
@@ -39,7 +39,7 @@ public sealed class FarmsController : BaseApiController
 
     [HttpPut]
     [SwaggerOperation(Summary = "Update Farm")]
-    public async Task<IActionResult> UpdateFarm([FromQuery] UpdateFarmCommand command)
+    public async Task<IActionResult> UpdateFarm(UpdateFarmCommand command)
     {
         await Mediator.Send(command);
 
@@ -47,7 +47,7 @@ public sealed class FarmsController : BaseApiController
     }
     
     [HttpDelete("{id:guid}")]
-    [SwaggerOperation(Summary = "Get Farm")]
+    [SwaggerOperation(Summary = "Delete Farm")]
     public async Task<IActionResult> DeleteFarm([FromRoute] Guid id)
     {
         await Mediator.Send(new DeleteFarmCommand { Id = id });

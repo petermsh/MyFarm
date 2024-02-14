@@ -1,9 +1,10 @@
 ﻿import {useStore} from "../../../app/stores/store";
 import {useEffect} from "react";
-import {Grid} from "semantic-ui-react";
+import {Button, Grid} from "semantic-ui-react";
 import FarmList from "./FarmList";
 import LoadingComponent from "../../../app/layout/LoadingComponent";
 import {observer} from "mobx-react-lite";
+import {NavLink} from "react-router-dom";
 
 
 export default observer(function FarmDashboard() {
@@ -18,11 +19,14 @@ export default observer(function FarmDashboard() {
     if (farmStore.loadingInitial) return <LoadingComponent content='Loading farms...' />
 
     return (
-        <Grid>
-            <Grid.Column width='12'>
-                <FarmList farms={[...farmRegistry.values()]}/>
-            </Grid.Column>
-        </Grid>
+        <>
+            <Grid>
+                <Grid.Column width='12'>
+                    <FarmList farms={[...farmRegistry.values()]}/>
+                </Grid.Column>
+            </Grid>
+            <Button as={NavLink} to='/farms/create' positive content='Create Farm' />
+        </>
         
     )
 })

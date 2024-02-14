@@ -72,6 +72,8 @@ const requests = {
 const Farms = {
     list: () => requests.get<Farm[]>('/farms'),
     details: (id: string) => requests.get<Farm>(`/farms/${id}`),
+    create: (farm: Farm) => requests.post<void>(`/farms`, farm),
+    update: (farm: Farm) => requests.put<void>(`/farms`, farm),
 }
 
 const Account = {

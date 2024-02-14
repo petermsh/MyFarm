@@ -1,12 +1,15 @@
 ﻿import {Farm} from "../models/farm";
 import {makeAutoObservable, runInAction} from "mobx";
 import agent from "../api/agent";
+import { v4 as uuid } from 'uuid';
 
 export default class FarmStore {
 
     farmRegistry = new Map<string, Farm>();
     loadingInitial = false;
     selectedFarm?: Farm = undefined;
+    editMode = false;
+    loading = false;
 
     constructor() {
         makeAutoObservable(this);
@@ -44,6 +47,39 @@ export default class FarmStore {
                 console.log(error);
                 this.setLoadingInitial(false);
             }
+        }
+    }
+    
+    createFarm = async (farm: Farm) => {
+        this.loading = true;
+        farm.id = uuid();
+        try {
+            await agent.Farms.create(farm);
+            runInAction(() => {
+                this.farmRegistry.set(farm.id, farm);
+                this.selectedFarm = farm;
+                this.editMode = false;
+                this.loading = false;
+            })
+        } catch (error) {
+            console.log(error);
+            runInAction(() => this.loading = false);
+        }
+    }
+
+    updateFarm = async (farm: Farm) => {
+        this.loading = true;
+        try {
+            await agent.Farms.update(farm);
+            runInAction(() => {
+                this.farmRegistry.set(farm.id, farm);
+                this.selectedFarm = farm;
+                this.editMode = false;
+                this.loading = false;
+            })
+        } catch (error) {
+            console.log(error);
+            runInAction(() => this.loading = false);
         }
     }
     

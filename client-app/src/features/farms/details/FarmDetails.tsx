@@ -4,6 +4,9 @@ import {useParams} from "react-router-dom";
 import {useEffect} from "react";
 import LoadingComponent from "../../../app/layout/LoadingComponent";
 import {Grid} from "semantic-ui-react";
+import FarmDetailedHeader from "./FarmDetailedHeader";
+import FarmDetailedInfo from "./FarmDetailedInfo";
+import FarmDetailedSeasonList from "./FarmDetailedSeasonList";
 
 
 export default observer(function FarmDetails() {
@@ -19,11 +22,10 @@ export default observer(function FarmDetails() {
 
     return (
         <Grid>
-            <Grid.Column width='10'>
-                {farm.address}
-            </Grid.Column>
-            <Grid.Column width='6'>
-                SideBar
+            <Grid.Column width='14'>
+                <FarmDetailedHeader farm={farm} />
+                <FarmDetailedInfo farm={farm} />
+                <FarmDetailedSeasonList farm={farm} />
             </Grid.Column>
         </Grid>
     )
