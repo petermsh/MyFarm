@@ -1,6 +1,6 @@
 ﻿namespace Domain.Entities;
 
-public class Field : BaseEntity
+public sealed class Field : BaseEntity
 {
     public string Location { get; set; }
     

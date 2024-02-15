@@ -3,4 +3,4 @@ using MediatR;
 
 namespace Application.Farms.Commands.CreateFarm;
 
-public record CreateFarmCommand([Required] string Address) : IRequest<CreateFarmResponse>;
+public record CreateFarmCommand([Required] string Address, [Required] string Name) : IRequest<CreateFarmResponse>;

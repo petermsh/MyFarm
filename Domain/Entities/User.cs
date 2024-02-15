@@ -2,7 +2,7 @@
 
 namespace Domain.Entities;
 
-public class User : IdentityUser<Guid>
+public sealed class User : IdentityUser<Guid>
 {
     public ICollection<Farm> Farms { get; set; }
 }

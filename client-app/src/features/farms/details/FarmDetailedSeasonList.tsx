@@ -9,13 +9,15 @@ interface Props {
 export default observer(function FarmDetailedSeasonList({farm}: Props) {
     return (
         <Table celled>
-            <TableHeader content={'Sezony'}>
+            <TableHeader>
+                <TableHeaderCell content={'Sezony'} colSpan={6} textAlign='center' />
                 <TableRow>
                     <TableHeaderCell>Nazwa</TableHeaderCell>
                     <TableHeaderCell>Przychody</TableHeaderCell>
                     <TableHeaderCell>Wydatki</TableHeaderCell>
                     <TableHeaderCell>Dochód</TableHeaderCell>
                     <TableHeaderCell>Status</TableHeaderCell>
+                    <TableHeaderCell></TableHeaderCell>
                 </TableRow>
             </TableHeader>
             

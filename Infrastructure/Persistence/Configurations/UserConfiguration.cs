@@ -8,5 +8,9 @@ internal sealed class UserConfiguration : IEntityTypeConfiguration<User>
 {
     public void Configure(EntityTypeBuilder<User> builder)
     {
+        builder
+            .HasMany(x => x.Farms)
+            .WithOne(x => x.User)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

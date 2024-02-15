@@ -20,7 +20,7 @@ internal sealed class UpdateFarmHandler : IRequestHandler<UpdateFarmCommand>
         if(farm is null)
             throw new FarmNotFoundException(request.Id);
         
-        farm.Update(request.Address);
+        farm.Update(request.Address, request.Name);
 
         await _farmRepository.SaveChangesAsync(farm, cancellationToken);
     }

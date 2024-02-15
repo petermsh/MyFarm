@@ -13,7 +13,7 @@ export default observer (function FarmDetailedInfo({farm}: Props) {
             <Segment attached='top'>
                 <Grid>
                     <Grid.Column width={1}>
-                        <Icon size='large' color='teal' name='info' />
+                        <Icon size='large' color='green' name='map marker alternate' />
                     </Grid.Column>
                     <Grid.Column width={15}>
                         <p>{farm.address}</p>
@@ -23,7 +23,7 @@ export default observer (function FarmDetailedInfo({farm}: Props) {
             <Segment attached>
                 <Grid verticalAlign='middle'>
                     <Grid.Column width={1}>
-                        <Icon name='marker' size='large' color='teal' />
+                        <Icon name='marker' size='large' color='green' />
                     </Grid.Column>
                     <Grid.Column width={11}>
                         <span>Liczba hektarów: </span>
@@ -33,7 +33,7 @@ export default observer (function FarmDetailedInfo({farm}: Props) {
             <Segment attached>
                 <Grid verticalAlign='middle'>
                     <Grid.Column width={1}>
-                        <Icon name='marker' size='large' color='teal' />
+                        <Icon name='marker' size='large' color='green' />
                     </Grid.Column>
                     <Grid.Column width={11}>
                         <span>Liczba pól: </span>

@@ -20,7 +20,8 @@ public class BrowseFarmsHandler : IRequestHandler<BrowseFarmsQuery, List<FarmsDt
             .Select(f => new FarmsDto()
             {
                 Id = f.Id,
-                Address = f.Address
+                Address = f.Address,
+                Name = f.Name
             }).ToListAsync(cancellationToken);
 
         return farms;

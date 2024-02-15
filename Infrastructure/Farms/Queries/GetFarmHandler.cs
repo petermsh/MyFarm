@@ -25,6 +25,7 @@ public class GetFarmHandler : IRequestHandler<GetFarmQuery, GetFarmResponse>
             {
                 Id = f.Id,
                 Address = f.Address,
+                Name = f.Name,
                 CreatedAt = f.CreatedAt
             }).SingleOrDefaultAsync(cancellationToken);
 

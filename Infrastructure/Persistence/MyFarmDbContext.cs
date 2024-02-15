@@ -13,6 +13,8 @@ public sealed class MyFarmDbContext : IdentityDbContext<User, IdentityRole<Guid>
     
     public DbSet<Farm> Farms { get; set; }
     public DbSet<Field> Fields { get; set; }
+    public DbSet<Season> Seasons { get; set; }
+    public DbSet<Operation> Operations { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
