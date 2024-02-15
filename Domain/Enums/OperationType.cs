@@ -5,11 +5,11 @@ namespace Domain.Enums;
 public enum OperationType
 {
     [Display(Name = "Brak danych")]
-    NoData,
+    NoData = 0,
     
     [Display(Name = "Przychód")]
-    Earning,
+    Earning = 1,
     
     [Display(Name = "Wydatek")]
-    Expense
+    Expense = 2
 }

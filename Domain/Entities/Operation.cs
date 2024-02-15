@@ -10,4 +10,22 @@ public sealed class Operation : BaseEntity
     
     public Guid SeasonId { get; set; }
     public Season Season { get; set; }
+
+    private Operation(string name, OperationType operationType, float value, Guid seasonId)
+    {
+        Name = name;
+        OperationType = operationType;
+        Value = value;
+        SeasonId = seasonId;
+    }
+
+    public static Operation Create(string name, OperationType operationType, float value, Guid seasonId)
+        => new(name, operationType, value, seasonId);
+
+    public void Update(string name, OperationType operationType, float value)
+    {
+        Name = name;
+        OperationType = operationType;
+        Value = value;
+    }
 }
