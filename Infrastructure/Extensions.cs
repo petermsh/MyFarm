@@ -1,9 +1,8 @@
 ﻿using System.Reflection;
 using Domain.Repositories;
-using Infrastructure.Farms.Queries;
-using Infrastructure.Farms.Repository;
 using Infrastructure.InfraExtensions;
 using Infrastructure.Middleware;
+using Infrastructure.Modules.Farms.Repository;
 using Infrastructure.Persistence;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;

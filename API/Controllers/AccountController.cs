@@ -1,6 +1,6 @@
-﻿using Application.Account.Commands.SignIn;
-using Application.Account.Commands.SignUp;
-using Application.Account.Queries.GetCurrent;
+﻿using Application.Modules.Account.Commands.SignIn;
+using Application.Modules.Account.Commands.SignUp;
+using Application.Modules.Account.Queries.GetCurrent;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;

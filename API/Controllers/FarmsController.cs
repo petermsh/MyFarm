@@ -1,8 +1,8 @@
-﻿using Application.Farms.Commands.CreateFarm;
-using Application.Farms.Commands.DeleteFarm;
-using Application.Farms.Commands.UpdateFarm;
-using Application.Farms.Queries.BrowseFarms;
-using Application.Farms.Queries.GetFarm;
+﻿using Application.Modules.Farms.Commands.CreateFarm;
+using Application.Modules.Farms.Commands.DeleteFarm;
+using Application.Modules.Farms.Commands.UpdateFarm;
+using Application.Modules.Farms.Queries.BrowseFarms;
+using Application.Modules.Farms.Queries.GetFarm;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 
