@@ -3,6 +3,7 @@ using Domain.Repositories;
 using Infrastructure.InfraExtensions;
 using Infrastructure.Middleware;
 using Infrastructure.Modules.Farms.Repository;
+using Infrastructure.Modules.Seasons.Repository;
 using Infrastructure.Persistence;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
@@ -25,6 +26,7 @@ public static class Extensions
         services.AddSwagger();
         
         services.AddScoped<IFarmRepository, FarmRepository>();
+        services.AddScoped<ISeasonRepository, SeasonRepository>();
         
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
         

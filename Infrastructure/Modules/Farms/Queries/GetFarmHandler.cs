@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Modules.Farms.Queries;
 
-public class GetFarmHandler : IRequestHandler<GetFarmQuery, GetFarmResponse>
+internal sealed class GetFarmHandler : IRequestHandler<GetFarmQuery, GetFarmResponse>
 {
     private readonly MyFarmDbContext _dbContext;
 
@@ -20,6 +20,7 @@ public class GetFarmHandler : IRequestHandler<GetFarmQuery, GetFarmResponse>
         var farm = await _dbContext.Farms
             .AsNoTracking()
             .Where(f => f.Id == request.Id)
+            .Include(f=>f.Seasons)
             .Select(f => new GetFarmResponse
             {
                 Id = f.Id,

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Modules.Farms.Queries;
 
-public class BrowseFarmsHandler : IRequestHandler<BrowseFarmsQuery, List<FarmsDto>>
+internal sealed class BrowseFarmsHandler : IRequestHandler<BrowseFarmsQuery, List<FarmsDto>>
 {
     private readonly MyFarmDbContext _dbContext;
 

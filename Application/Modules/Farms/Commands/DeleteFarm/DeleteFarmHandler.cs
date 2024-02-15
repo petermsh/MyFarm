@@ -4,7 +4,7 @@ using MediatR;
 
 namespace Application.Modules.Farms.Commands.DeleteFarm;
 
-public class DeleteFarmHandler : IRequestHandler<DeleteFarmCommand>
+internal sealed class DeleteFarmHandler : IRequestHandler<DeleteFarmCommand>
 {
     private readonly IFarmRepository _farmRepository;
 
