@@ -29,7 +29,7 @@ internal sealed class GetOperationHandler : IRequestHandler<GetOperationQuery, G
             {
                 Id = o.Id,
                 Name = o.Name,
-                OperationType = o.OperationType,
+                OperationType = o.OperationType.GetDisplayName(),
                 Value = o.Value,
                 SeasonId = o.SeasonId,
                 CreatedAt = o.CreatedAt

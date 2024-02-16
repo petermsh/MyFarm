@@ -2,6 +2,7 @@
 using Infrastructure.Persistence;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Extensions;
 
 namespace Infrastructure.Modules.Seasons.Queries;
 
@@ -21,7 +22,7 @@ internal sealed class BrowseSeasonsHandler : IRequestHandler<BrowseSeasonsQuery,
             {
                 Id = f.Id,
                 Name = f.Name,
-                Status = f.Status
+                Status = f.Status.GetDisplayName()
             }).ToListAsync(cancellationToken);
 
         return seasons;

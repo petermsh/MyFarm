@@ -6,7 +6,7 @@ public class GetOperationResponse
 {
     public Guid Id { get; set; }
     public string Name { get; set; }
-    public OperationType OperationType { get; set; }
+    public string OperationType { get; set; }
     public float Value { get; set; }
     public Guid SeasonId { get; set; }
     public DateTimeOffset CreatedAt { get; set; }

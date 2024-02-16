@@ -3,6 +3,7 @@ using Domain.Repositories;
 using Infrastructure.Persistence;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Extensions;
 
 namespace Infrastructure.Modules.Operations.Queries;
 
@@ -23,7 +24,7 @@ internal sealed class BrowseOperationsHandler : IRequestHandler<BrowseOperations
             {
                 Id = o.Id,
                 Name = o.Name,
-                OperationType = o.OperationType,
+                OperationType = o.OperationType.GetDisplayName(),
                 Value = o.Value
             }).ToListAsync(cancellationToken);
 

@@ -4,6 +4,7 @@ using Domain.Enums;
 using Infrastructure.Persistence;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Extensions;
 
 namespace Infrastructure.Modules.Seasons.Queries;
 
@@ -25,7 +26,7 @@ internal sealed class GetSeasonHandler : IRequestHandler<GetSeasonQuery, GetSeas
             {
                 Id = f.Id,
                 Name = f.Name,
-                Status = f.Status,
+                Status = f.Status.GetDisplayName(),
                 CreatedAt = f.CreatedAt
             }).SingleOrDefaultAsync(cancellationToken);
 
