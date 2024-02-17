@@ -24,18 +24,25 @@ export default observer(function SeasonList({seasons}: Props) {
                 </TableRow>
             </TableHeader>
 
-            {seasons.map(season => (
+            {seasons.map(season => {
+
+                const income = !isNaN(season.earnings) ? season.earnings : 0;
+                const expenses = !isNaN(season.expenses) ? season.expenses : 0;
+                const profit = income - expenses;
+                
+                return(
                 <TableBody>
                     <TableRow>
                         <TableCell>{season.name}</TableCell>
-                        <TableCell>20000</TableCell>
-                        <TableCell>12000</TableCell>
-                        <TableCell>8000</TableCell>
+                        <TableCell>{income}</TableCell>
+                        <TableCell>{expenses}</TableCell>
+                        <TableCell>{profit}</TableCell>
                         <TableCell>{season.status}</TableCell>
                         <Button as={NavLink} to={`/seasons/${season.id}`} positive content={'Szczegóły'} />
                     </TableRow>
                 </TableBody>
-            ))}
+                );
+            })}
 
         </Table>
     )

@@ -10,6 +10,7 @@ import FarmDetailedSeasonList from "./FarmDetailedSeasonList";
 import FarmDetailedFieldList from "./FarmDetailedFieldList";
 import {Field} from "../../../app/models/field";
 import agent from "../../../app/api/agent";
+import {Season} from "../../../app/models/season";
 
 
 export default observer(function FarmDetails() {
@@ -18,11 +19,12 @@ export default observer(function FarmDetails() {
     const { id } = useParams();
 
     const [fields, setFields] = useState<Field[]>([]);
+    const [seasons, setSeasons] = useState<Season[]>([]);
 
     useEffect(() => {
         const fetchData = async () => {
             if (id) {
-                await Promise.all([loadFarm(id), loadFields(id)]);
+                await Promise.all([loadFarm(id), loadFields(id), loadSeasons(id)]);
             }
         };
 
@@ -38,6 +40,15 @@ export default observer(function FarmDetails() {
         }
     };
 
+    const loadSeasons = async (seasonId: string) => {
+        try {
+            const seasons = await agent.Seasons.list(seasonId);
+            setSeasons(seasons);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
     if (loadingInitial || !farm) return <LoadingComponent />
     
     return (
@@ -45,7 +56,7 @@ export default observer(function FarmDetails() {
             <Grid.Column width='14'>
                 <FarmDetailedHeader farm={farm} />
                 <FarmDetailedInfo farm={farm} fields={fields} />
-                <FarmDetailedSeasonList farm={farm} />
+                <FarmDetailedSeasonList seasons={seasons} />
                 <FarmDetailedFieldList fields={fields} />
             </Grid.Column>
         </Grid>

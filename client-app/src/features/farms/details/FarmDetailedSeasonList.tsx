@@ -1,12 +1,12 @@
 ﻿import {observer} from "mobx-react-lite";
-import {Farm} from "../../../app/models/farm";
 import {Button, Table, TableBody, TableCell, TableHeader, TableHeaderCell, TableRow} from "semantic-ui-react";
+import {Season} from "../../../app/models/season";
 
 
 interface Props {
-    farm: Farm
+    seasons: Season[]
 }
-export default observer(function FarmDetailedSeasonList({farm}: Props) {
+export default observer(function FarmDetailedSeasonList({seasons}: Props) {
     return (
         <Table celled>
             <TableHeader>
@@ -23,14 +23,25 @@ export default observer(function FarmDetailedSeasonList({farm}: Props) {
 
             
             <TableBody>
-                <TableRow>
-                    <TableCell>Sezon 2023/2024</TableCell>
-                    <TableCell>20000</TableCell>
-                    <TableCell>12000</TableCell>
-                    <TableCell>8000</TableCell>
-                    <TableCell>Trwa</TableCell>
-                    <Button positive content={'Szczegóły'} />
-                </TableRow>
+                {seasons.map((season) => {
+
+                    console.log(season);
+                    
+                    const income = !isNaN(season.earnings) ? season.earnings : 0;
+                    const expenses = !isNaN(season.expenses) ? season.expenses : 0;
+                    const profit = income - expenses;
+
+                    return (
+                        <TableRow>
+                            <TableCell>{season.name}</TableCell>
+                            <TableCell>{income}</TableCell>
+                            <TableCell>{expenses}</TableCell>
+                            <TableCell>{profit}</TableCell>
+                            <TableCell>{season.status}</TableCell>
+                            <Button positive content={'Szczegóły'}/>
+                        </TableRow>
+                    );
+                })}
             </TableBody>
             
         </Table>

@@ -79,7 +79,7 @@ const Farms = {
 }
 
 const Seasons = {
-    list: () => requests.get<Season[]>('/seasons'),
+    list: (seasonId?: string) => requests.get<Season[]>('/seasons', { params: { seasonId } }),
     details: (id: string) => requests.get<Season>(`/seasons/${id}`),
     create: (season: Season) => requests.post<void>(`/seasons`, season),
     update: (season: Season) => requests.put<void>(`/seasons`, season),
