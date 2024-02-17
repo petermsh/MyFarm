@@ -1,7 +1,6 @@
 ﻿import {Season} from "../models/season";
 import {makeAutoObservable, runInAction} from "mobx";
 import agent from "../api/agent";
-import {v4 as uuid} from "uuid";
 
 
 export default class SeasonStore {
@@ -52,9 +51,8 @@ export default class SeasonStore {
 
     createSeason = async (season: Season) => {
         this.loading = true;
-        season.id = uuid();
         try {
-            await agent.Seasons.create(season);
+            season.id = await agent.Seasons.create(season);
             runInAction(() => {
                 this.seasonRegistry.set(season.id, season);
                 this.selectedSeason = season;

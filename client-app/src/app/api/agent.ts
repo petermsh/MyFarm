@@ -7,6 +7,7 @@ import {Farm} from "../models/farm";
 import {Season} from "../models/season";
 import {Field} from "../models/field";
 import {Operation} from "../models/operation";
+import {Id} from "../models/Id";
 
 
 const sleep = (delay: number) => {
@@ -75,14 +76,15 @@ const requests = {
 const Farms = {
     list: () => requests.get<Farm[]>('/farms'),
     details: (id: string) => requests.get<Farm>(`/farms/${id}`),
-    create: (farm: Farm) => requests.post<void>(`/farms`, farm),
+    create: (farm: Farm) => requests.post<Id>(`/farms`, farm),
     update: (farm: Farm) => requests.put<void>(`/farms`, farm),
+    delete: (id: string) => requests.delete<void>(`/farms/${id}`)
 }
 
 const Seasons = {
     list: (seasonId?: string) => requests.get<Season[]>('/seasons', { params: { seasonId } }),
     details: (id: string) => requests.get<Season>(`/seasons/${id}`),
-    create: (season: Season) => requests.post<void>(`/seasons`, season),
+    create: (season: Season) => requests.post<string>(`/seasons`, season),
     update: (season: Season) => requests.put<void>(`/seasons`, season),
 }
 const Fields = {

@@ -21,16 +21,6 @@ export default observer(function FarmDetails() {
     const [fields, setFields] = useState<Field[]>([]);
     const [seasons, setSeasons] = useState<Season[]>([]);
 
-    useEffect(() => {
-        const fetchData = async () => {
-            if (id) {
-                await Promise.all([loadFarm(id), loadFields(id), loadSeasons(id)]);
-            }
-        };
-
-        fetchData();
-    }, [id, loadFarm]);
-
     const loadFields = async (farmId: string) => {
         try {
             const fields = await agent.Fields.list(farmId);
@@ -48,6 +38,17 @@ export default observer(function FarmDetails() {
             console.log(error);
         }
     };
+    
+    useEffect(() => {
+        const fetchData = async () => {
+            if (id) {
+                await Promise.all([loadFarm(id), loadFields(id), loadSeasons(id)]);
+            }
+        };
+
+        fetchData();
+    }, [id, loadFarm, loadSeasons, loadFields]);
+    
 
     if (loadingInitial || !farm) return <LoadingComponent />
     

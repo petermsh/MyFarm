@@ -11,7 +11,9 @@ export default observer(function FarmDetailedSeasonList({seasons}: Props) {
     return (
         <Table celled>
             <TableHeader>
-                <TableHeaderCell content={'Sezony'} colSpan={6} textAlign='center' />
+                <TableRow>
+                    <TableHeaderCell content={'Sezony'} colSpan={6} textAlign='center' />
+                </TableRow>
                 <TableRow>
                     <TableHeaderCell>Nazwa</TableHeaderCell>
                     <TableHeaderCell>Przychody</TableHeaderCell>
@@ -50,14 +52,15 @@ export default observer(function FarmDetailedSeasonList({seasons}: Props) {
                     }
                     
                     return (
-                        <TableRow>
+                        <TableRow key={season.id}>
                             <TableCell>{season.name}</TableCell>
                             <TableCell>{income}</TableCell>
                             <TableCell>{expenses}</TableCell>
                             <TableCell>{profit}</TableCell>
                             <TableCell style={{ color: statusColor }}>{statusText}</TableCell>
-                            
-                            <Button as={Link} to={`/seasons/${season.id}`} positive content='Szczegóły' />
+                            <TableCell>
+                                <Button as={Link} to={`/seasons/${season.id}`} positive content='Szczegóły' />
+                            </TableCell>
                         </TableRow>
                     );
                 })}

@@ -15,10 +15,10 @@ export default observer(function SeasonDetailsHeader({season}: Props) {
                 content={season.name}
             />
             {season.status}
-            <Button as={Link} to={`/farms/delete/${season.id}`} color='red' floated='right'>
+            <Button as={Link} to={`/seasons/delete/${season.id}`} color='red' floated='right'>
                 Delete season
             </Button>
-            <Button as={Link} to={`/farms/update/${season.id}`} color='orange' floated='right'>
+            <Button as={Link} to={`/seasons/update/${season.id}`} color='orange' floated='right'>
                 Update info
             </Button>
         </Segment>

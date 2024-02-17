@@ -1,6 +1,7 @@
 ﻿import {observer} from "mobx-react-lite";
 import {Button, Table, TableBody, TableCell, TableHeader, TableHeaderCell, TableRow} from 'semantic-ui-react';
 import {Field} from "../../../app/models/field";
+import {Link} from "react-router-dom";
 
 
 interface Props {
@@ -27,7 +28,7 @@ export default observer(function FieldList({fields}: Props) {
                         <TableCell>{field.number}</TableCell>
                         <TableCell>{field.area}</TableCell>
                         <TableCell>{field.location}</TableCell>
-                        <Button positive content={'Szczegóły'} />
+                        <Button as={Link} to={`/fields/${field.id}`} positive content={'Szczegóły'} />
                     </TableRow>
                 </TableBody>
             ))}
