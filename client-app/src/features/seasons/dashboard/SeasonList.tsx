@@ -29,6 +29,23 @@ export default observer(function SeasonList({seasons}: Props) {
                 const income = !isNaN(season.earnings) ? season.earnings : 0;
                 const expenses = !isNaN(season.expenses) ? season.expenses : 0;
                 const profit = income - expenses;
+
+                let statusText = "";
+                let statusColor = "";
+
+                switch (season.status) {
+                    case "Active":
+                        statusText = "Aktywny";
+                        statusColor = "green";
+                        break;
+                    case "Finished":
+                        statusText = "Zakończony";
+                        statusColor = "red";
+                        break;
+                    default:
+                        statusText = "Brak danych";
+                        break;
+                }
                 
                 return(
                 <TableBody>
@@ -37,7 +54,7 @@ export default observer(function SeasonList({seasons}: Props) {
                         <TableCell>{income}</TableCell>
                         <TableCell>{expenses}</TableCell>
                         <TableCell>{profit}</TableCell>
-                        <TableCell>{season.status}</TableCell>
+                        <TableCell style={{ color: statusColor }}>{statusText}</TableCell>
                         <Button as={NavLink} to={`/seasons/${season.id}`} positive content={'Szczegóły'} />
                     </TableRow>
                 </TableBody>

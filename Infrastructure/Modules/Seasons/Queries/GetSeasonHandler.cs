@@ -1,4 +1,5 @@
-﻿using Application.Modules.Seasons.Exceptions;
+﻿using Application.Modules.Operations.Queries.BrowseOperations;
+using Application.Modules.Seasons.Exceptions;
 using Application.Modules.Seasons.Queries.GetSeason;
 using Domain.Enums;
 using Infrastructure.Persistence;
@@ -21,13 +22,16 @@ internal sealed class GetSeasonHandler : IRequestHandler<GetSeasonQuery, GetSeas
     {
         var season = await _dbContext.Seasons
             .AsNoTracking()
-            .Where(f => f.Id == request.Id)
-            .Select(f => new GetSeasonResponse
+            .Include(s=>s.Operations)
+            .Where(s => s.Id == request.Id)
+            .Select(s => new GetSeasonResponse
             {
-                Id = f.Id,
-                Name = f.Name,
-                Status = f.Status.GetDisplayName(),
-                CreatedAt = f.CreatedAt
+                Id = s.Id,
+                Name = s.Name,
+                Status = s.Status.GetDisplayName(),
+                Earnings = s.Operations.Where(o=>o.OperationType == OperationType.Earning).Sum(o=>o.Value),
+                Expenses = s.Operations.Where(o=>o.OperationType == OperationType.Expense).Sum(o=>o.Value),
+                CreatedAt = s.CreatedAt,
             }).SingleOrDefaultAsync(cancellationToken);
 
         if(season is null)

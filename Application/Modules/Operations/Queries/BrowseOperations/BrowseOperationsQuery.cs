@@ -2,4 +2,7 @@
 
 namespace Application.Modules.Operations.Queries.BrowseOperations;
 
-public record BrowseOperationsQuery: IRequest<List<OperationDto>>;
+public record BrowseOperationsQuery : IRequest<List<OperationDto>>
+{
+    public Guid? SeasonId { get; set; }
+}

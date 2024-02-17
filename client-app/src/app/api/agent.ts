@@ -6,6 +6,7 @@ import {toast} from "react-toastify";
 import {Farm} from "../models/farm";
 import {Season} from "../models/season";
 import {Field} from "../models/field";
+import {Operation} from "../models/operation";
 
 
 const sleep = (delay: number) => {
@@ -91,6 +92,10 @@ const Fields = {
     update: (field: Field) => requests.put<void>(`/fields`, field),
 }
 
+const Operations = {
+    list: (seasonId?: string) => requests.get<Operation[]>('/operations', { params: { seasonId } }),
+}
+
 const Account = {
     current: () => requests.get<User>('account'),
     login: (user: UserFormValues) => requests.post<User>('/account/signIn', user),
@@ -102,6 +107,7 @@ const agent = {
     Farms,
     Seasons,
     Fields,
+    Operations,
 }
 
 export default agent;

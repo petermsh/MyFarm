@@ -14,7 +14,6 @@ export default class SeasonStore {
 
     constructor() {
         makeAutoObservable(this);
-
     }
 
     loadSeasons = async () => {

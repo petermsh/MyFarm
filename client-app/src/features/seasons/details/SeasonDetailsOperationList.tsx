@@ -2,12 +2,14 @@
 import {Button, Table, TableBody, TableCell, TableHeader, TableHeaderCell, TableRow} from "semantic-ui-react";
 import {Season} from "../../../app/models/season";
 import {NavLink} from "react-router-dom";
+import {Operation} from "../../../app/models/operation";
 
 interface Props {
     season: Season;
+    operations: Operation[];
 }
 
-export default observer(function SeasonDetailsOperationList({season}: Props) {
+export default observer(function SeasonDetailsOperationList({season, operations}: Props) {
     
     return (
         <>
@@ -23,19 +25,22 @@ export default observer(function SeasonDetailsOperationList({season}: Props) {
                 </TableHeader>
 
                 <TableBody>
-                    <TableRow>
-                        <TableCell>Zakup saletry</TableCell>
-                        <TableCell>0</TableCell>
-                        <TableCell>3000</TableCell>
-                        <TableCell>01.02.2024</TableCell>
-                    </TableRow>
+                    
+                    {operations?.map(operation =>(
+                        <TableRow key={operation.id}>
+                        <TableCell>{operation.name}</TableCell>
+                        <TableCell>{operation.operationType === 'Income' ? operation.value : 0}</TableCell>
+                        <TableCell>{operation.operationType === 'Expense' ? operation.value : 0}</TableCell>
+                        <TableCell>data</TableCell>
+                        </TableRow>
+                    
+                    ) )}
                 </TableBody>
-
                 <TableHeader>
                     <TableRow>
                         <TableHeaderCell>Suma</TableHeaderCell>
-                        <TableHeaderCell>1000</TableHeaderCell>
-                        <TableHeaderCell>3000</TableHeaderCell>
+                        <TableHeaderCell>{season.earnings}</TableHeaderCell>
+                        <TableHeaderCell>{season.expenses}</TableHeaderCell>
                         <TableHeaderCell></TableHeaderCell>
                     </TableRow>
                 </TableHeader>
