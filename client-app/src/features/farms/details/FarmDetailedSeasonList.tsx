@@ -20,6 +20,7 @@ export default observer(function FarmDetailedSeasonList({farm}: Props) {
                     <TableHeaderCell></TableHeaderCell>
                 </TableRow>
             </TableHeader>
+
             
             <TableBody>
                 <TableRow>

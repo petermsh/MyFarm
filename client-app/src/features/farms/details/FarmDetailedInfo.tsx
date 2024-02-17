@@ -1,13 +1,18 @@
 ﻿import {Farm} from "../../../app/models/farm";
 import {observer} from "mobx-react-lite";
 import {Grid, Icon, Segment} from "semantic-ui-react";
+import {Field} from "../../../app/models/field";
 
 
 interface Props {
     farm: Farm
+    fields: Field[]
 }
 
-export default observer (function FarmDetailedInfo({farm}: Props) {
+export default observer (function FarmDetailedInfo({farm, fields}: Props) {
+    
+    const totalArea = fields.reduce((acc, curr) => acc + curr.area, 0);
+    
     return (
         <Segment.Group>
             <Segment attached='top'>
@@ -26,7 +31,7 @@ export default observer (function FarmDetailedInfo({farm}: Props) {
                         <Icon name='marker' size='large' color='green' />
                     </Grid.Column>
                     <Grid.Column width={11}>
-                        <span>Liczba hektarów: </span>
+                        <span>Liczba hektarów: {totalArea}</span>
                     </Grid.Column>
                 </Grid>
             </Segment>
@@ -36,7 +41,7 @@ export default observer (function FarmDetailedInfo({farm}: Props) {
                         <Icon name='marker' size='large' color='green' />
                     </Grid.Column>
                     <Grid.Column width={11}>
-                        <span>Liczba pól: </span>
+                        <span>Liczba pól: {fields.length}</span>
                     </Grid.Column>
                 </Grid>
             </Segment>

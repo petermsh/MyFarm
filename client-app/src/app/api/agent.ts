@@ -4,6 +4,8 @@ import {User, UserFormValues} from "../models/user";
 import {router} from "../router/Routes";
 import {toast} from "react-toastify";
 import {Farm} from "../models/farm";
+import {Season} from "../models/season";
+import {Field} from "../models/field";
 
 
 const sleep = (delay: number) => {
@@ -63,7 +65,7 @@ axios.interceptors.response.use(async response => {
 const responseBody = <T> (response: AxiosResponse<T>) => response.data;
 
 const requests = {
-    get: <T> (url: string) => axios.get<T>(url).then(responseBody),
+    get: <T> (url: string, params?: {}) => axios.get<T>(url, { params }).then(responseBody),
     post: <T> (url: string, body: {}) => axios.post<T>(url, body).then(responseBody),
     put: <T> (url: string, body: {}) => axios.put<T>(url, body).then(responseBody),
     delete: <T> (url: string) => axios.delete<T>(url).then(responseBody)
@@ -76,6 +78,19 @@ const Farms = {
     update: (farm: Farm) => requests.put<void>(`/farms`, farm),
 }
 
+const Seasons = {
+    list: () => requests.get<Season[]>('/seasons'),
+    details: (id: string) => requests.get<Season>(`/seasons/${id}`),
+    create: (season: Season) => requests.post<void>(`/seasons`, season),
+    update: (season: Season) => requests.put<void>(`/seasons`, season),
+}
+const Fields = {
+    list: (farmId?: string) => requests.get<Field[]>('/fields', { params: { farmId } }),
+    details: (id: string) => requests.get<Field>(`/fields/${id}`),
+    create: (field: Field) => requests.post<void>(`/fields`, field),
+    update: (field: Field) => requests.put<void>(`/fields`, field),
+}
+
 const Account = {
     current: () => requests.get<User>('account'),
     login: (user: UserFormValues) => requests.post<User>('/account/signIn', user),
@@ -84,7 +99,9 @@ const Account = {
 
 const agent = {
     Account,
-    Farms
+    Farms,
+    Seasons,
+    Fields,
 }
 
 export default agent;

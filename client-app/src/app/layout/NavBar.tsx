@@ -15,6 +15,8 @@ export default observer(function NavBar() {
                     MyFarm
                 </Menu.Item>
                 <Menu.Item as={NavLink} to='/farms' name='Farms'/>
+                <Menu.Item as={NavLink} to='/seasons' name='Seasons'/>
+                <Menu.Item as={NavLink} to='/fields' name='Fields'/>
                 <Menu.Item position={'right'}>
                     <Dropdown pointing={'top left'} text={user?.username}>
                         <Dropdown.Menu>

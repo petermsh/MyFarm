@@ -12,7 +12,7 @@ export default observer (function FarmDetailedHeader({farm}: Props) {
         <Segment clearing attached='bottom'>
             <Header
                 size='huge'
-                content={'Farm name'}
+                content={farm.name}
             />
                 <Button as={Link} to={`/farms/delete/${farm.id}`} color='red' floated='right'>
                     Delete farm

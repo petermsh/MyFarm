@@ -20,10 +20,12 @@ export default observer(function FarmForm() {
     const [farm, setFarm] = useState<Farm>({
         id: '',
         address: '',
+        name: '',
     });
 
     const validationSchema = Yup.object({
         address: Yup.string().required('The farm title is required'),
+        name: Yup.string().required('The farm name is required'),
     });
 
     useEffect(() => {
@@ -56,6 +58,7 @@ export default observer(function FarmForm() {
                 {({ handleSubmit, isValid, isSubmitting, dirty }) => (
                     <Form className='ui form' onSubmit={handleSubmit} autoComplete='off'>
                         <MyTextInput name='address' placeholder='Address' />
+                        <MyTextInput name='name' placeholder='Name' />
 
                         <Button disabled={isSubmitting || !dirty || !isValid} loading={loading} floated='right' positive type='submit' content='Submit' />
                         <Button as={Link} to='/farms' floated='right' type='button' content='Cancel' />

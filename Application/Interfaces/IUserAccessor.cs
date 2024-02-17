@@ -2,6 +2,7 @@
 
 public interface IUserAccessor
 {
-    string GetUserId();
+    string GetUserIdAsString();
+    Guid GetUserIdAsGuid();
     string GetUserEmail();
 }

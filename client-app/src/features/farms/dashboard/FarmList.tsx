@@ -14,7 +14,7 @@ export default observer(function FarmList({farms}: Props) {
             {farms && farms.map(farm => (
                 <Card key={farm.id}>
                     <Card.Content>
-                        <Card.Header>Nazwa</Card.Header>
+                        <Card.Header>{farm.name}</Card.Header>
                         <Card.Meta>{farm.address}</Card.Meta>
                         <Card.Description>
                             Opis:
@@ -27,7 +27,7 @@ export default observer(function FarmList({farms}: Props) {
                             href={`/farms/${farm.id}`}
                             color='teal'
                             floated='right'
-                            content='Zobacz farmę'
+                            content='Szczegóły'
                         />
                     </Card.Content>
                 </Card>

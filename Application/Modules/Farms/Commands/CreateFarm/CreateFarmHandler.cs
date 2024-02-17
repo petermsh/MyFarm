@@ -18,7 +18,7 @@ internal sealed class CreateFarmHandler : IRequestHandler<CreateFarmCommand, Cre
     
     public async Task<CreateFarmResponse> Handle(CreateFarmCommand command, CancellationToken cancellationToken)
     {
-        var farm = Farm.Create(command.Address, command.Name, new Guid(_userAccessor.GetUserId()));
+        var farm = Farm.Create(command.Address, command.Name, _userAccessor.GetUserIdAsGuid());
 
         await _farmRepository.AddAsync(farm, cancellationToken);
 
