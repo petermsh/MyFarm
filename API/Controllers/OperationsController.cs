@@ -4,6 +4,7 @@ using Application.Modules.Operations.Commands.DeleteOperation;
 using Application.Modules.Operations.Commands.UpdateOperation;
 using Application.Modules.Operations.Queries.BrowseOperations;
 using Application.Modules.Operations.Queries.GetOperation;
+using Infrastructure.Modules.Seasons.Queries;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -22,9 +23,11 @@ public sealed class OperationsController : BaseApiController
     
     [HttpGet]
     [SwaggerOperation(Summary = "Browse Operations")]
-    public async Task<ActionResult<List<OperationDto>>> BrowseOperations()
+    public async Task<ActionResult<List<OperationDto>>> BrowseOperations([FromQuery(Name = "seasonId")] string? seasonId)
     {
-        var result = await Mediator.Send(new BrowseOperationsQuery());
+        var query = seasonId is null ? new BrowseOperationsQuery() : new BrowseOperationsQuery { SeasonId = new Guid(seasonId) };
+        
+        var result = await Mediator.Send(query);
 
         return Ok(result);
     }

@@ -14,28 +14,34 @@ export default observer(function SeasonDetails() {
     const { seasonStore } = useStore();
     const { selectedSeason: season, loadSeason, loadingInitial } = seasonStore;
     const { id } = useParams();
-    
-    const[operations, setOperations] = useState<Operation[]>([]);
-    
-    useEffect(() => {
-        const fetchData = async () => {
-            if (id) await Promise.all([loadSeason(id), loadOperations(id)]);
-        }
-        
-        fetchData();
-        
-    }, [id, loadSeason]);
+
+    const [operations, setOperations] = useState<Operation[]>([]);
 
     const loadOperations = async (seasonId: string) => {
         try {
-            const operations = await agent.Operations.list(seasonId);
-            setOperations(operations);
+            const operations = await agent.Operations.list({ seasonId });
+            return operations;
         } catch (error) {
             console.log(error);
+            return [];
         }
-    }
-    
-    if (loadingInitial || !season) return <LoadingComponent />
+    };
+
+    useEffect(() => {
+        const fetchData = async () => {
+            if (id) {
+                await loadSeason(id);
+                const loadedOperations = await loadOperations(id);
+                setOperations(loadedOperations);
+            }
+        };
+
+        fetchData();
+
+    }, [id, loadSeason]);
+
+
+    if (loadingInitial || !season) return <LoadingComponent />;
 
     return (
         <Grid>
@@ -44,5 +50,5 @@ export default observer(function SeasonDetails() {
                 <SeasonDetailsOperationList season={season} operations={operations} />
             </Grid.Column>
         </Grid>
-    )
-})
+    );
+});

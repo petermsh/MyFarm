@@ -12,7 +12,7 @@ public sealed class SeasonsController : BaseApiController
 {
     [HttpGet("{id:guid}")]
     [SwaggerOperation(Summary = "Get Season")]
-    public async Task<ActionResult<GetSeasonResponse>> GetFarm([FromRoute] Guid id)
+    public async Task<ActionResult<GetSeasonResponse>> GetSeason([FromRoute] Guid id)
     {
         var result = await Mediator.Send(new GetSeasonQuery { Id = id });
 
@@ -21,9 +21,11 @@ public sealed class SeasonsController : BaseApiController
     
     [HttpGet]
     [SwaggerOperation(Summary = "Browse Seasons")]
-    public async Task<ActionResult<List<SeasonDto>>> BrowseFarms()
+    public async Task<ActionResult<List<SeasonDto>>> BrowseSeasons([FromQuery(Name = "farmId")] string? farmId)
     {
-        var result = await Mediator.Send(new BrowseSeasonsQuery());
+        var query = farmId is null ? new BrowseSeasonsQuery() : new BrowseSeasonsQuery { FarmId = new Guid(farmId) };
+        
+        var result = await Mediator.Send(query);
 
         return Ok(result);
     }

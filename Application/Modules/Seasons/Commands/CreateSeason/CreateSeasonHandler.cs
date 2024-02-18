@@ -30,6 +30,6 @@ internal sealed class CreateSeasonHandler : IRequestHandler<CreateSeasonCommand,
         farm.Seasons.Add(season);
         await _farmRepository.SaveChangesAsync(farm, cancellationToken);
 
-        return new CreateSeasonResponse(season.Id);
+        return new CreateSeasonResponse(season.Id.ToString());
     }
 }

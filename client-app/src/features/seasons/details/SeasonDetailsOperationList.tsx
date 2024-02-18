@@ -10,7 +10,6 @@ interface Props {
 }
 
 export default observer(function SeasonDetailsOperationList({season, operations}: Props) {
-    
     return (
         <>
             <Table celled>
@@ -27,13 +26,14 @@ export default observer(function SeasonDetailsOperationList({season, operations}
                 <TableBody>
                     
                     {operations?.map(operation =>(
+                        
                         <TableRow key={operation.id}>
                         <TableCell>{operation.name}</TableCell>
-                        <TableCell>{operation.operationType === 'Income' ? operation.value : 0}</TableCell>
+                        <TableCell>{operation.operationType === 'Earning' ? operation.value : 0}</TableCell>
                         <TableCell>{operation.operationType === 'Expense' ? operation.value : 0}</TableCell>
                         <TableCell>data</TableCell>
                         </TableRow>
-                    
+                        
                     ) )}
                 </TableBody>
                 <TableHeader>

@@ -4,7 +4,6 @@ import {Link, useNavigate, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {Season} from "../../../app/models/season";
 import * as Yup from "yup";
-import {v4 as uuid} from "uuid";
 import LoadingComponent from "../../../app/layout/LoadingComponent";
 import {Button, Header, Segment} from "semantic-ui-react";
 import {Form, Formik} from "formik";
@@ -45,14 +44,11 @@ export default observer(function SeasonForm() {
         text: farm.name
     }));
     
-    function handleFormSubmit(season: Season) {
-        console.log(season);
+    async function handleFormSubmit(season: Season) {
         if (season.id.length === 0) {
-            let newSeason = {
-                ...season,
-                id: uuid()
-            };
-            createSeason(newSeason).then(() => navigate(`/seasons/${newSeason.id}`))
+            const seasonId = await createSeason(season);
+            console.log(seasonId);
+            navigate(`/seasons/${seasonId}`)
         } else {
             updateSeason(season).then(() => navigate(`/seasons/${season.id}`))
         }

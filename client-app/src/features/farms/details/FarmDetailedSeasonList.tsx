@@ -25,8 +25,6 @@ export default observer(function FarmDetailedSeasonList({seasons}: Props) {
             
             <TableBody>
                 {seasons.map((season) => {
-
-                    console.log(season);
                     
                     const income = !isNaN(season.earnings) ? season.earnings : 0;
                     const expenses = !isNaN(season.expenses) ? season.expenses : 0;

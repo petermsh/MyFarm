@@ -1,7 +1,6 @@
 ﻿import {Field} from "../models/field";
 import {makeAutoObservable, runInAction} from "mobx";
 import agent from "../api/agent";
-import {v4 as uuid} from "uuid";
 
 
 export default class FieldStore {
@@ -20,7 +19,12 @@ export default class FieldStore {
     loadFields = async (farmId?: string) => {
         this.setLoadingInitial(true);
         try {
-            const fields = await agent.Fields.list(farmId);
+            let fields;
+            if(farmId !== undefined) {
+                fields = await agent.Fields.list( { farmId } );
+            } else {
+                fields = await agent.Fields.list();
+            }
             fields.forEach((field: Field) => {
                 this.setField(field);
             });
@@ -53,9 +57,8 @@ export default class FieldStore {
 
     createField = async (field: Field) => {
         this.loading = true;
-        field.id = uuid();
         try {
-            await agent.Fields.create(field);
+            field.id = await agent.Fields.create(field);
             runInAction(() => {
                 this.fieldRegistry.set(field.id, field);
                 this.selectedField = field;

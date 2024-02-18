@@ -28,8 +28,8 @@ internal sealed class BrowseSeasonsHandler : IRequestHandler<BrowseSeasonsQuery,
         if (request.FarmId.HasValue)
             query = query.Where(q => q.FarmId == request.FarmId);
         
-        var seasons = await _dbContext.Seasons
-            .Select(s => new SeasonDto()
+        var seasons = await 
+            query.Select(s => new SeasonDto()
             {
                 Id = s.Id,
                 Name = s.Name,

@@ -17,7 +17,12 @@ export default class OperationStore {
     loadOperations = async (seasonId?: string) => {
         this.setLoadingInitial(true);
         try {
-            const operations = await agent.Operations.list(seasonId);
+            let operations;
+            if (seasonId !== undefined) {
+                operations = await agent.Operations.list({ seasonId });
+            } else {
+                operations = await agent.Operations.list();
+            }
             operations.forEach((operation: Operation) => {
                 this.setOperation(operation);
             });

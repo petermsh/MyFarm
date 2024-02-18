@@ -7,3 +7,7 @@ export interface Season {
     status?: string,
     farmId?: string,
 }
+
+export interface CreateSeasonResponse {
+    seasonId: string
+}

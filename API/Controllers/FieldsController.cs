@@ -21,9 +21,11 @@ public sealed class FieldsController : BaseApiController
     
     [HttpGet]
     [SwaggerOperation(Summary = "Browse Fields")]
-    public async Task<ActionResult<List<FieldDto>>> BrowseFields()
+    public async Task<ActionResult<List<FieldDto>>> BrowseFields([FromQuery(Name = "farmId")] string? farmId)
     {
-        var result = await Mediator.Send(new BrowseFieldsQuery());
+        var query = farmId is null ? new BrowseFieldsQuery() : new BrowseFieldsQuery { FarmId = new Guid(farmId) };
+        
+        var result = await Mediator.Send(query);
 
         return Ok(result);
     }

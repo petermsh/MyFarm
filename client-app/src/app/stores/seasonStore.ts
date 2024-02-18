@@ -1,7 +1,6 @@
 ﻿import {Season} from "../models/season";
 import {makeAutoObservable, runInAction} from "mobx";
 import agent from "../api/agent";
-import {v4 as uuid} from "uuid";
 
 
 export default class SeasonStore {
@@ -16,10 +15,15 @@ export default class SeasonStore {
         makeAutoObservable(this);
     }
 
-    loadSeasons = async () => {
+    loadSeasons = async (farmId?: string) => {
         this.setLoadingInitial(true);
         try {
-            const seasons = await agent.Seasons.list();
+            let seasons;
+            if(farmId !== undefined) {
+                seasons = await agent.Seasons.list( { farmId } );
+            } else {
+                seasons = await agent.Seasons.list();
+            }
             seasons.forEach((season: Season) => {
                 this.setSeason(season);
             });
@@ -52,15 +56,18 @@ export default class SeasonStore {
 
     createSeason = async (season: Season) => {
         this.loading = true;
-        season.id = uuid();
         try {
-            await agent.Seasons.create(season);
+            const newSeason = await agent.Seasons.create(season);
+            console.log(newSeason);
+            season.id = newSeason.seasonId;
             runInAction(() => {
                 this.seasonRegistry.set(season.id, season);
                 this.selectedSeason = season;
                 this.editMode = false;
                 this.loading = false;
             })
+            console.log(season);
+            return season.id;
         } catch (error) {
             console.log(error);
             runInAction(() => this.loading = false);
