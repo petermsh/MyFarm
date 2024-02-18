@@ -47,7 +47,6 @@ export default observer(function SeasonForm() {
     async function handleFormSubmit(season: Season) {
         if (season.id.length === 0) {
             const seasonId = await createSeason(season);
-            console.log(seasonId);
             navigate(`/seasons/${seasonId}`)
         } else {
             updateSeason(season).then(() => navigate(`/seasons/${season.id}`))

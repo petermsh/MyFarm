@@ -19,6 +19,6 @@ internal sealed class CreateFieldHandler : IRequestHandler<CreateFieldCommand, C
         
         await _fieldRepository.AddAsync(field, cancellationToken);
 
-        return new CreateFieldResponse(field.Id);
+        return new CreateFieldResponse(field.Id.ToString());
     }
 }

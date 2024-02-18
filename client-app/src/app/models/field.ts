@@ -5,3 +5,7 @@
     number: number,
     farmId?: string,
 }
+
+export interface CreateFieldResponse {
+    fieldId: string
+}

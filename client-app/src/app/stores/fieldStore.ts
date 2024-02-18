@@ -58,13 +58,15 @@ export default class FieldStore {
     createField = async (field: Field) => {
         this.loading = true;
         try {
-            field.id = await agent.Fields.create(field);
+            const newField = await agent.Fields.create(field);
+            field.id = newField.fieldId;
             runInAction(() => {
                 this.fieldRegistry.set(field.id, field);
                 this.selectedField = field;
                 this.editMode = false;
                 this.loading = false;
             })
+            return field.id;
         } catch (error) {
             console.log(error);
             runInAction(() => this.loading = false);

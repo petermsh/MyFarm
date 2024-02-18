@@ -52,13 +52,15 @@ export default class FarmStore {
     createFarm = async (farm: Farm) => {
         this.loading = true;
         try {
-            farm.id = await agent.Farms.create(farm);
+            const newFarm = await agent.Farms.create(farm);
+            farm.id = newFarm.farmId;
             runInAction(() => {
                 this.farmRegistry.set(farm.id, farm);
                 this.selectedFarm = farm;
                 this.editMode = false;
                 this.loading = false;
             })
+            return farm.id;
         } catch (error) {
             console.log(error);
             runInAction(() => this.loading = false);

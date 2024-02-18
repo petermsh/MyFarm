@@ -4,3 +4,7 @@ export interface Farm {
     address: string;
     name: string;
 }
+
+export interface CreateFarmResponse {
+    farmId: string
+}

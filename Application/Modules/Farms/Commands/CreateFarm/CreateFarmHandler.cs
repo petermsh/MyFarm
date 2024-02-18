@@ -22,7 +22,7 @@ internal sealed class CreateFarmHandler : IRequestHandler<CreateFarmCommand, Cre
 
         await _farmRepository.AddAsync(farm, cancellationToken);
 
-        return new CreateFarmResponse(farm.Id);
+        return new CreateFarmResponse(farm.Id.ToString());
     }
     
 }

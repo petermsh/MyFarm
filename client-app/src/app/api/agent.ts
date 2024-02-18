@@ -3,9 +3,9 @@ import {store} from "../stores/store";
 import {User, UserFormValues} from "../models/user";
 import {router} from "../router/Routes";
 import {toast} from "react-toastify";
-import {Farm} from "../models/farm";
+import {CreateFarmResponse, Farm} from "../models/farm";
 import {CreateSeasonResponse, Season} from "../models/season";
-import {Field} from "../models/field";
+import {CreateFieldResponse, Field} from "../models/field";
 import {Operation} from "../models/operation";
 
 
@@ -75,7 +75,7 @@ const requests = {
 const Farms = {
     list: () => requests.get<Farm[]>('/farms'),
     details: (id: string) => requests.get<Farm>(`/farms/${id}`),
-    create: (farm: Farm) => requests.post<string>(`/farms`, farm),
+    create: (farm: Farm) => requests.post<CreateFarmResponse>(`/farms`, farm),
     update: (farm: Farm) => requests.put<void>(`/farms`, farm),
 }
 
@@ -100,7 +100,7 @@ const Fields = {
         }
     },
     details: (id: string) => requests.get<Field>(`/fields/${id}`),
-    create: (field: Field) => requests.post<string>(`/fields`, field),
+    create: (field: Field) => requests.post<CreateFieldResponse>(`/fields`, field),
     update: (field: Field) => requests.put<void>(`/fields`, field),
 }
 

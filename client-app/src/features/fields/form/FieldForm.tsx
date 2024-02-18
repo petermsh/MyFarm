@@ -4,7 +4,6 @@ import {Link, useNavigate, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {Field} from "../../../app/models/field";
 import * as Yup from "yup";
-import {v4 as uuid} from "uuid";
 import LoadingComponent from "../../../app/layout/LoadingComponent";
 import {Button, Header, Segment} from "semantic-ui-react";
 import {Form, Formik} from "formik";
@@ -50,14 +49,10 @@ export default observer(function FieldForm() {
         text: farm.name
     }));
     
-    function handleFormSubmit(field: Field) {
-        console.log(field);
+    async function handleFormSubmit(field: Field) {
         if (field.id.length === 0) {
-            let newField = {
-                ...field,
-                id: uuid()
-            };
-            createField(newField).then(() => navigate(`/fields/${newField.id}`))
+            const fieldId = await createField(field);
+            navigate(`/fields/${fieldId}`);
         } else {
             updateField(field).then(() => navigate(`/fields/${field.id}`))
         }

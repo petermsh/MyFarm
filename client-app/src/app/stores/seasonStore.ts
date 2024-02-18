@@ -66,7 +66,6 @@ export default class SeasonStore {
                 this.editMode = false;
                 this.loading = false;
             })
-            console.log(season);
             return season.id;
         } catch (error) {
             console.log(error);
