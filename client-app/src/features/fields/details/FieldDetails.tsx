@@ -4,6 +4,7 @@ import {useParams} from "react-router-dom";
 import {useEffect} from "react";
 import LoadingComponent from "../../../app/layout/LoadingComponent";
 import {Grid} from "semantic-ui-react";
+import FieldDetailsHeader from "./FieldDetailsHeader";
 
 
 export default observer(function FieldDetails() {
@@ -20,7 +21,7 @@ export default observer(function FieldDetails() {
     return (
         <Grid>
             <Grid.Column width='14'>
-                {field.location}
+                <FieldDetailsHeader field={field} />
             </Grid.Column>
         </Grid>
     )

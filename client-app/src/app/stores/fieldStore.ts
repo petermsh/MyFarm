@@ -89,6 +89,18 @@ export default class FieldStore {
         }
     }
 
+    deleteField = async(id: string) => {
+        this.loading = true;
+        try {
+            await agent.Fields.delete(id);
+            this.fieldRegistry.delete(id);
+            runInAction(() => this.loading = false);
+        } catch (error) {
+            console.log(error);
+            runInAction(() => this.loading = false);
+        }
+    }
+
     private setField = (field: Field) => {
         this.fieldRegistry.set(field.id, field);
     }

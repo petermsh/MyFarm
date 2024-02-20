@@ -104,6 +104,7 @@ const Fields = {
     details: (id: string) => requests.get<Field>(`/fields/${id}`),
     create: (field: Field) => requests.post<CreateFieldResponse>(`/fields`, field),
     update: (field: Field) => requests.put<void>(`/fields`, field),
+    delete: (id: string) => requests.delete<void>(`/fields/${id}`)
 }
 
 const Operations = {

@@ -21,7 +21,7 @@ export default observer(function FarmList({farms}: Props) {
                         </Card.Description>
                     </Card.Content>
                     <Card.Content extra>
-                        <span>Liczba hektarów: 10</span>
+                        <span>Liczba hektarów: </span>
                         <Button
                             as='a'
                             href={`/farms/${farm.id}`}
