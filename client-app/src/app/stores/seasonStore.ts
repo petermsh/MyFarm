@@ -89,6 +89,18 @@ export default class SeasonStore {
         }
     }
 
+    deleteSeason = async(id: string) => {
+        this.loading = true;
+        try {
+            await agent.Seasons.delete(id);
+            this.seasonRegistry.delete(id);
+            runInAction(() => this.loading = false);
+        } catch (error) {
+            console.log(error);
+            runInAction(() => this.loading = false);
+        }
+    }
+
     private setSeason = (season: Season) => {
         this.seasonRegistry.set(season.id, season);
     }

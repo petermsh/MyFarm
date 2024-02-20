@@ -91,6 +91,7 @@ const Seasons = {
     details: (id: string) => requests.get<Season>(`/seasons/${id}`),
     create: (season: Season) => requests.post<CreateSeasonResponse>(`/seasons`, season),
     update: (season: Season) => requests.put<void>(`/seasons`, season),
+    delete: (id: string) => requests.delete<void>(`/seasons/${id}`)
 }
 const Fields = {
     list: (params?: FieldParams) => {

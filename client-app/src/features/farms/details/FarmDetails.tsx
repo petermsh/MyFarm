@@ -44,8 +44,6 @@ export default observer(function FarmDetails() {
             
             if(id)
                 await loadFarm(id);
-                console.log('farmId:', id); // Dodajemy log, aby sprawdzić wartość farmId
-                console.log('farm.id:', farm?.id);
             if (farm && farm.id && farm.id !== prevFarmIdRef.current) {
                 await loadFields(farm.id);
                 await loadSeasons(farm.id);

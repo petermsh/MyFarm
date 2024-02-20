@@ -10,6 +10,7 @@ interface Props {
 }
 
 export default observer (function FarmDetailedHeader({farm}: Props) {
+    
     const [open, setOpen] = useState(false);
 
     return (
@@ -19,7 +20,7 @@ export default observer (function FarmDetailedHeader({farm}: Props) {
                 content={farm.name}
             />
             <Button color="red" floated="right" onClick={() => setOpen(true)}>
-                Usuń farmę
+                Usuń
             </Button>
             <Button as={Link} to={`/farms/update/${farm.id}`} color='orange' floated='right'>
                 Edytuj
