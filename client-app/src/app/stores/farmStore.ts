@@ -83,6 +83,18 @@ export default class FarmStore {
         }
     }
     
+    deleteFarm = async(id: string) => {
+        this.loading = true;
+        try {
+            await agent.Farms.delete(id);
+            this.farmRegistry.delete(id);
+            runInAction(() => this.loading = false);
+        } catch (error) {
+            console.log(error);
+            runInAction(() => this.loading = false);
+        }
+    }
+    
     private setFarm = (farm: Farm) => {
         this.farmRegistry.set(farm.id, farm);
     }

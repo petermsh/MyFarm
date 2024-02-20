@@ -77,6 +77,7 @@ const Farms = {
     details: (id: string) => requests.get<Farm>(`/farms/${id}`),
     create: (farm: Farm) => requests.post<CreateFarmResponse>(`/farms`, farm),
     update: (farm: Farm) => requests.put<void>(`/farms`, farm),
+    delete: (id: string) => requests.delete<void>(`/farms/${id}`)
 }
 
 const Seasons = {

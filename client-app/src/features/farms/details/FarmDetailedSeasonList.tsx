@@ -25,9 +25,9 @@ export default observer(function FarmDetailedSeasonList({seasons}: Props) {
             
             <TableBody>
                 {seasons.map((season) => {
-                    
-                    const income = !isNaN(season.earnings) ? season.earnings : 0;
-                    const expenses = !isNaN(season.expenses) ? season.expenses : 0;
+
+                    const income = season.earnings ?? 0;
+                    const expenses = season.expenses ?? 0;
                     const profit = income - expenses;
 
                     let statusText = "";
@@ -48,7 +48,7 @@ export default observer(function FarmDetailedSeasonList({seasons}: Props) {
                     }
                     
                     return (
-                        <TableRow>
+                        <TableRow key={season.id}>
                             <TableCell>{season.name}</TableCell>
                             <TableCell>{income}</TableCell>
                             <TableCell>{expenses}</TableCell>
