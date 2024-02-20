@@ -3,7 +3,7 @@ import {store} from "../stores/store";
 import {User, UserFormValues} from "../models/user";
 import {router} from "../router/Routes";
 import {toast} from "react-toastify";
-import {CreateFarmResponse, Farm} from "../models/farm";
+import {CreateFarmResponse, Farm, FarmListResponse} from "../models/farm";
 import {CreateSeasonResponse, Season} from "../models/season";
 import {CreateFieldResponse, Field} from "../models/field";
 import {Operation} from "../models/operation";
@@ -73,7 +73,7 @@ const requests = {
 }
 
 const Farms = {
-    list: () => requests.get<Farm[]>('/farms'),
+    list: () => requests.get<FarmListResponse[]>('/farms'),
     details: (id: string) => requests.get<Farm>(`/farms/${id}`),
     create: (farm: Farm) => requests.post<CreateFarmResponse>(`/farms`, farm),
     update: (farm: Farm) => requests.put<void>(`/farms`, farm),

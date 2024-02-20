@@ -20,12 +20,14 @@ internal sealed class BrowseFarmsHandler : IRequestHandler<BrowseFarmsQuery, Lis
     public async Task<List<FarmsDto>> Handle(BrowseFarmsQuery request, CancellationToken cancellationToken)
     {
         var farms = await _dbContext.Farms
+            .Include(f=>f.Fields)
             .Where(f=>f.UserId == _userAccessor.GetUserIdAsGuid())
             .Select(f => new FarmsDto()
             {
                 Id = f.Id,
                 Address = f.Address,
-                Name = f.Name
+                Name = f.Name,
+                TotalArea = f.Fields.Sum(x=>x.Area)
             }).ToListAsync(cancellationToken);
 
         return farms;

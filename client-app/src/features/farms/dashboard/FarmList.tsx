@@ -1,10 +1,10 @@
 ﻿import {observer} from "mobx-react-lite";
-import {Farm} from "../../../app/models/farm";
+import {FarmListResponse} from "../../../app/models/farm";
 import {Button, Card} from 'semantic-ui-react';
 
 
 interface Props {
-    farms: Farm[];
+    farms: FarmListResponse[];
 }
 
 export default observer(function FarmList({farms}: Props) {
@@ -17,11 +17,10 @@ export default observer(function FarmList({farms}: Props) {
                         <Card.Header>{farm.name}</Card.Header>
                         <Card.Meta>{farm.address}</Card.Meta>
                         <Card.Description>
-                            Opis:
+                            {farm.totalArea} ha
                         </Card.Description>
                     </Card.Content>
                     <Card.Content extra>
-                        <span>Liczba hektarów: </span>
                         <Button
                             as='a'
                             href={`/farms/${farm.id}`}
