@@ -6,7 +6,7 @@ import {toast} from "react-toastify";
 import {CreateFarmResponse, Farm, FarmListResponse} from "../models/farm";
 import {CreateSeasonResponse, Season} from "../models/season";
 import {CreateFieldResponse, Field} from "../models/field";
-import {Operation} from "../models/operation";
+import {CreateOperationResponse, Operation} from "../models/operation";
 
 
 const sleep = (delay: number) => {
@@ -114,7 +114,8 @@ const Operations = {
         } else {
             return axios.get<Operation[]>(`/operations?seasonId=${params.seasonId}`).then(responseBody);
         }
-    }
+    },
+    create: (operation: Operation) => requests.post<CreateOperationResponse>(`/operations`, operation),
 }
 const Account = {
     current: () => requests.get<User>('account'),

@@ -1,52 +1,135 @@
 ﻿import {observer} from "mobx-react-lite";
-import {Button, Table, TableBody, TableCell, TableHeader, TableHeaderCell, TableRow} from "semantic-ui-react";
-import {Season} from "../../../app/models/season";
-import {NavLink} from "react-router-dom";
+import {Button, Form, Modal, Table} from "semantic-ui-react";
+import {useEffect, useState} from "react";
+import {useStore} from "../../../app/stores/store";
+import {format} from "date-fns";
 import {Operation} from "../../../app/models/operation";
+import MyTextInput from "../../../app/common/MyTextInput";
+import MyNumberInput from "../../../app/common/MyNumberInput";
+import MySelectInput from "../../../app/common/MySelectInput";
+import {operationOptions} from "../../../app/options/operationOptions";
+import {Formik} from "formik";
+import * as Yup from "yup";
+import MyDateInput from "../../../app/common/MyDateInput";
 
 interface Props {
-    season: Season;
     operations: Operation[];
+    seasonId: string;
 }
 
-export default observer(function SeasonDetailsOperationList({season, operations}: Props) {
+export default observer(function SeasonDetailsOperationList({operations, seasonId}: Props) {
+    
+    const { operationStore } = useStore();
+    const { handleEditOperation, handleDeleteOperation, createOperation, loading, loadOperations } = operationStore;
+    const [showModal, setShowModal] = useState(false);
+    //const navigate = useNavigate();
+
+    const openModal = () => {
+        setShowModal(true);
+    }
+
+    const closeModal = () => {
+        setShowModal(false);
+    }
+    
+    const [operation] = useState<Operation>({
+        id: '',
+        name: '',
+        operationType: '',
+        value: 0,
+        date: null
+    });
+
+    const validationSchema = Yup.object({
+        name: Yup.string().required('The Operation name is required'),
+        value: Yup.string().required('The Operation value is required'),
+        operationType: Yup.string().required('The Operation type is required'),
+        date: Yup.string().required('The Operation date is required'),
+    });
+
+    function handleFormSubmit(operation: Operation) {
+        operation.seasonId = seasonId;
+        console.log(operation);
+        createOperation(operation).then(() => closeModal());
+    }
+
+    useEffect(() => {
+        console.log("useEffect");
+        if (!showModal) { // Sprawdzenie, czy modal został zamknięty
+            loadOperations(seasonId); // Wywołanie funkcji odświeżającej dane
+        }
+    }, [showModal]);
+
     return (
         <>
             <Table celled>
-                <TableHeader>
-                    <TableHeaderCell content={'Operacje'} colSpan={6} textAlign='center' />
-                    <TableRow>
-                        <TableHeaderCell>Nazwa</TableHeaderCell>
-                        <TableHeaderCell>Przychód</TableHeaderCell>
-                        <TableHeaderCell>Wydatek</TableHeaderCell>
-                        <TableHeaderCell>Data</TableHeaderCell>
-                    </TableRow>
-                </TableHeader>
+                <Table.Header>
+                    <Table.Row>
+                        <Table.HeaderCell content={'Operacje'} colSpan={6} textAlign='center' />
+                    </Table.Row>
+                    <Table.Row>
+                        <Table.HeaderCell>Nazwa</Table.HeaderCell>
+                        <Table.HeaderCell>Przychód</Table.HeaderCell>
+                        <Table.HeaderCell>Wydatek</Table.HeaderCell>
+                        <Table.HeaderCell>Data</Table.HeaderCell>
+                        <Table.HeaderCell>Akcje</Table.HeaderCell>
+                    </Table.Row>
+                </Table.Header>
 
-                <TableBody>
-                    
-                    {operations?.map(operation =>(
-                        
-                        <TableRow key={operation.id}>
-                        <TableCell>{operation.name}</TableCell>
-                        <TableCell>{operation.operationType === 'Earning' ? operation.value : 0}</TableCell>
-                        <TableCell>{operation.operationType === 'Expense' ? operation.value : 0}</TableCell>
-                        <TableCell>data</TableCell>
-                        </TableRow>
-                        
-                    ) )}
-                </TableBody>
-                <TableHeader>
-                    <TableRow>
-                        <TableHeaderCell>Suma</TableHeaderCell>
-                        <TableHeaderCell>{season.earnings}</TableHeaderCell>
-                        <TableHeaderCell>{season.expenses}</TableHeaderCell>
-                        <TableHeaderCell></TableHeaderCell>
-                    </TableRow>
-                </TableHeader>
+                <Table.Body>
+                    {operations?.map(operation => (
+                        <Table.Row key={operation.id}>
+                            <Table.Cell>{operation.name}</Table.Cell>
+                            <Table.Cell>{operation.operationType === 'Earning' ? operation.value : 0}</Table.Cell>
+                            <Table.Cell>{operation.operationType === 'Expense' ? operation.value : 0}</Table.Cell>
+                            <Table.Cell>{format(operation.date!, 'dd MMM yyyy')}</Table.Cell>
+                            <Table.Cell>
+                                <Button icon='edit' onClick={() => handleEditOperation(operation.id)} />
+                                <Button icon='trash' onClick={() => handleDeleteOperation(operation.id)} />
+                            </Table.Cell>
+                        </Table.Row>
+                    ))}
+                </Table.Body>
+
+                <Table.Footer>
+                    <Table.Row>
+                        <Table.HeaderCell colSpan='5'>
+                            <Button positive onClick={openModal} content='Dodaj operację' />
+                        </Table.HeaderCell>
+                    </Table.Row>
+                </Table.Footer>
             </Table>
-            <Button as={NavLink} to='/operations/create' positive content='Add Operation' />
 
+            <Modal open={showModal} onClose={closeModal} size='tiny'>
+                <Modal.Header>Dodaj operację</Modal.Header>
+                <Modal.Content>
+                    <Formik
+                        enableReinitialize
+                        validationSchema={validationSchema}
+                        initialValues={operation}
+                        onSubmit={values => handleFormSubmit(values)}>
+                        {({ handleSubmit, isValid, isSubmitting, dirty }) => (
+                            <Form className='ui form' onSubmit={handleSubmit} autoComplete='off'>
+                                <MyTextInput name='name' placeholder='Name' />
+                                <MyNumberInput placeholder={'Kwota'} name={'value'} />
+                                <MySelectInput
+                                    options={operationOptions}
+                                    placeholder='OperationType'
+                                    name='operationType'
+                                />
+                                <MyDateInput placeholderText='Date'
+                                             name='date'
+                                             showTimeSelect
+                                             timeCaption={'time'}
+                                             dateFormat={'MMMM d, yyyy h:mm aa'} />
+
+                                <Button disabled={isSubmitting || !dirty || !isValid} loading={loading} floated='right' positive type='submit' content='Submit' />
+                                <Button onClick={closeModal} floated='right' type='button' content='Cancel' />
+                            </Form>
+                        )}
+                    </Formik>
+                </Modal.Content>
+            </Modal>
         </>
-    )
+    );
 })

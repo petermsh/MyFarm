@@ -5,6 +5,7 @@ import ModalStore from "./modalStores";
 import FarmStore from "./farmStore";
 import SeasonStore from "./seasonStore";
 import FieldStore from "./fieldStore";
+import OperationStore from "./operationStore";
 
 
 interface Store {
@@ -14,6 +15,7 @@ interface Store {
     farmStore : FarmStore;
     seasonStore: SeasonStore;
     fieldStore: FieldStore;
+    operationStore: OperationStore;
 }
 
 export const store: Store = {
@@ -23,6 +25,7 @@ export const store: Store = {
     farmStore: new FarmStore(),
     seasonStore: new SeasonStore(),
     fieldStore: new FieldStore(),
+    operationStore: new OperationStore(),
 }
 
 export const StoreContext = createContext(store);

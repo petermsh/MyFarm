@@ -30,6 +30,7 @@ internal sealed class BrowseOperationsHandler : IRequestHandler<BrowseOperations
                 Name = o.Name,
                 OperationType = o.OperationType.GetDisplayName(),
                 Value = o.Value,
+                Date = o.Date,
                 CreatedAt = o.CreatedAt
             }).ToListAsync(cancellationToken);
 

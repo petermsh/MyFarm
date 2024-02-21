@@ -1,5 +1,5 @@
 ﻿import {Operation} from "../models/operation";
-import {makeAutoObservable} from "mobx";
+import {makeAutoObservable, runInAction} from "mobx";
 import agent from "../api/agent";
 
 export default class OperationStore {
@@ -33,6 +33,25 @@ export default class OperationStore {
         }
     }
 
+    createOperation = async (operation: Operation) => {
+        this.loading = true;
+        try {
+            console.log(operation);
+            const newOperation = await agent.Operations.create(operation);
+            operation.id = newOperation.operationId;
+            runInAction(() => {
+                this.operationRegistry.set(operation.id, operation);
+                this.selectedOperation = operation;
+                this.editMode = false;
+                this.loading = false;
+            })
+            return operation.id;
+        } catch (error) {
+            console.log(error);
+            runInAction(() => this.loading = false);
+        }
+    }
+    
     private setOperation = (operation: Operation) => {
         this.operationRegistry.set(operation.id, operation);
     }
@@ -40,5 +59,15 @@ export default class OperationStore {
 
     setLoadingInitial = (state: boolean) => {
         this.loadingInitial = state;
+    }
+
+    handleEditOperation = (operationId: string) => {
+        // Obsługa edycji operacji
+        console.log(`Edycja operacji o id: ${operationId}`);
+    }
+
+    handleDeleteOperation = (operationId: string) => {
+        // Obsługa usuwania operacji
+        console.log(`Usuwanie operacji o id: ${operationId}`);
     }
 }

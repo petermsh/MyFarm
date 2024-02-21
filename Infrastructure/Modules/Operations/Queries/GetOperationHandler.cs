@@ -31,6 +31,7 @@ internal sealed class GetOperationHandler : IRequestHandler<GetOperationQuery, G
                 Name = o.Name,
                 OperationType = o.OperationType.GetDisplayName(),
                 Value = o.Value,
+                Date = o.Date,
                 SeasonId = o.SeasonId,
                 CreatedAt = o.CreatedAt
             }).SingleOrDefaultAsync(cancellationToken);
