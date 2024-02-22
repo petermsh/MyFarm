@@ -5,6 +5,7 @@ using Infrastructure.Middleware;
 using Infrastructure.Modules.Farms.Repository;
 using Infrastructure.Modules.Fields.Repository;
 using Infrastructure.Modules.Operations.Repository;
+using Infrastructure.Modules.Plants.Repository;
 using Infrastructure.Modules.Seasons.Repository;
 using Infrastructure.Persistence;
 using Microsoft.AspNetCore.Builder;
@@ -31,6 +32,7 @@ public static class Extensions
         services.AddScoped<ISeasonRepository, SeasonRepository>();
         services.AddScoped<IOperationRepository, OperationRepository>();
         services.AddScoped<IFieldRepository, FieldRepository>();
+        services.AddScoped<IPlantRepository, PlantRepository>();
         
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
         

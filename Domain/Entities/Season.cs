@@ -10,7 +10,7 @@ public sealed class Season : BaseEntity
     public Guid FarmId { get; set; }
     public Farm Farm { get; set; }
     public ICollection<Operation> Operations { get; set; }
-
+    public ICollection<Plant> Plants { get; set; }
 
     private Season(string name, Guid farmId)
     {

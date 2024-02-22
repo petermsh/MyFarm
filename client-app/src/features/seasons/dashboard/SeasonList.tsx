@@ -26,8 +26,8 @@ export default observer(function SeasonList({seasons}: Props) {
 
             {seasons.map(season => {
 
-                const income = !isNaN(season.earnings) ? season.earnings : 0;
-                const expenses = !isNaN(season.expenses) ? season.expenses : 0;
+                const income = season.earnings ?? 0;
+                const expenses = season.expenses ?? 0;
                 const profit = income - expenses;
 
                 let statusText = "";

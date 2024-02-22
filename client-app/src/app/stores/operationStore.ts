@@ -61,11 +61,6 @@ export default class OperationStore {
         this.loadingInitial = state;
     }
 
-    handleEditOperation = (operationId: string) => {
-        // Obsługa edycji operacji
-        console.log(`Edycja operacji o id: ${operationId}`);
-    }
-
     handleDeleteOperation = (operationId: string) => {
         // Obsługa usuwania operacji
         console.log(`Usuwanie operacji o id: ${operationId}`);

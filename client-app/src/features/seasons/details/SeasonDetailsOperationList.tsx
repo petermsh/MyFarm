@@ -20,9 +20,8 @@ interface Props {
 export default observer(function SeasonDetailsOperationList({operations, seasonId}: Props) {
     
     const { operationStore } = useStore();
-    const { handleEditOperation, handleDeleteOperation, createOperation, loading, loadOperations } = operationStore;
+    const { handleDeleteOperation, createOperation, loading, loadOperations } = operationStore;
     const [showModal, setShowModal] = useState(false);
-    //const navigate = useNavigate();
 
     const openModal = () => {
         setShowModal(true);
@@ -31,8 +30,18 @@ export default observer(function SeasonDetailsOperationList({operations, seasonI
     const closeModal = () => {
         setShowModal(false);
     }
+
+    const { earnings, expenses } = operations.reduce((acc, operation) => {
+        const { operationType, value } = operation;
+        if (operationType === 'Earning') {
+            acc.earnings += value;
+        } else if (operationType === 'Expense') {
+            acc.expenses += value;
+        }
+        return acc;
+    }, { earnings: 0, expenses: 0 });
     
-    const [operation] = useState<Operation>({
+    let [initialOperation] = useState<Operation>({
         id: '',
         name: '',
         operationType: '',
@@ -60,6 +69,11 @@ export default observer(function SeasonDetailsOperationList({operations, seasonI
         }
     }, [showModal]);
 
+    function handleEditOperation(operation: Operation) {
+        initialOperation = operation;
+        openModal();
+    }
+
     return (
         <>
             <Table celled>
@@ -84,12 +98,21 @@ export default observer(function SeasonDetailsOperationList({operations, seasonI
                             <Table.Cell>{operation.operationType === 'Expense' ? operation.value : 0}</Table.Cell>
                             <Table.Cell>{format(operation.date!, 'dd MMM yyyy')}</Table.Cell>
                             <Table.Cell>
-                                <Button icon='edit' onClick={() => handleEditOperation(operation.id)} />
+                                <Button icon='edit' onClick={() => handleEditOperation(operation)} />
                                 <Button icon='trash' onClick={() => handleDeleteOperation(operation.id)} />
                             </Table.Cell>
                         </Table.Row>
                     ))}
                 </Table.Body>
+                
+                <Table.Header>
+                    <Table.Row>
+                        <Table.HeaderCell>Podsumowanie</Table.HeaderCell>
+                        <Table.HeaderCell>{earnings}</Table.HeaderCell>
+                        <Table.HeaderCell>{expenses}</Table.HeaderCell>
+                        <Table.HeaderCell colSpan={2} textAlign='center' >Dochód: 2000</Table.HeaderCell>
+                    </Table.Row>
+                </Table.Header>
 
                 <Table.Footer>
                     <Table.Row>
@@ -106,7 +129,7 @@ export default observer(function SeasonDetailsOperationList({operations, seasonI
                     <Formik
                         enableReinitialize
                         validationSchema={validationSchema}
-                        initialValues={operation}
+                        initialValues={initialOperation}
                         onSubmit={values => handleFormSubmit(values)}>
                         {({ handleSubmit, isValid, isSubmitting, dirty }) => (
                             <Form className='ui form' onSubmit={handleSubmit} autoComplete='off'>
