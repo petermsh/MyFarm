@@ -15,7 +15,7 @@ internal sealed class CreateOperationHandler : IRequestHandler<CreateOperationCo
 
     public async Task<CreateOperationResponse> Handle(CreateOperationCommand request, CancellationToken cancellationToken)
     {
-        var operation = Operation.Create(request.Name, request.OperationType, request.Value, new Guid(request.SeasonId), request.Date);
+        var operation = Operation.Create(request.Name, request.OperationType, request.Value, new Guid(request.SeasonId), new Guid(request.FieldId), request.Date);
 
         await _operationRepository.AddAsync(operation, cancellationToken);
 

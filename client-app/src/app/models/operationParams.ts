@@ -1,3 +1,4 @@
 ﻿interface OperationParams {
-    seasonId: string
+    seasonId: string,
+    fieldId?: string
 }

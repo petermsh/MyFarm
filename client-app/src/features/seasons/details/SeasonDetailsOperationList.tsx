@@ -15,12 +15,14 @@ import MyDateInput from "../../../app/common/MyDateInput";
 interface Props {
     operations: Operation[];
     seasonId: string;
+    farmId?: string;
 }
 
-export default observer(function SeasonDetailsOperationList({operations, seasonId}: Props) {
+export default observer(function SeasonDetailsOperationList({operations, seasonId, farmId}: Props) {
     
-    const { operationStore } = useStore();
+    const { operationStore, fieldStore } = useStore();
     const { handleDeleteOperation, createOperation, loading, loadOperations } = operationStore;
+    const { loadFields, fieldRegistry } = fieldStore;
     const [showModal, setShowModal] = useState(false);
 
     const openModal = () => {
@@ -41,11 +43,14 @@ export default observer(function SeasonDetailsOperationList({operations, seasonI
         return acc;
     }, { earnings: 0, expenses: 0 });
     
+    const income = earnings - expenses;
+    
     let [initialOperation] = useState<Operation>({
         id: '',
         name: '',
         operationType: '',
         value: 0,
+        fieldId: '',
         date: null
     });
 
@@ -53,6 +58,7 @@ export default observer(function SeasonDetailsOperationList({operations, seasonI
         name: Yup.string().required('The Operation name is required'),
         value: Yup.string().required('The Operation value is required'),
         operationType: Yup.string().required('The Operation type is required'),
+        fieldId: Yup.string().required('The Field is required'),
         date: Yup.string().required('The Operation date is required'),
     });
 
@@ -69,6 +75,16 @@ export default observer(function SeasonDetailsOperationList({operations, seasonI
         }
     }, [showModal]);
 
+    useEffect(() => {
+        loadFields(farmId);
+    }, [loadFields]);
+
+    const fieldOptions = Array.from(fieldRegistry.values()).map(field => ({
+        key: field.id,
+        value: field.id,
+        text: field.number
+    }));
+    
     function handleEditOperation(operation: Operation) {
         initialOperation = operation;
         openModal();
@@ -86,6 +102,7 @@ export default observer(function SeasonDetailsOperationList({operations, seasonI
                         <Table.HeaderCell>Przychód</Table.HeaderCell>
                         <Table.HeaderCell>Wydatek</Table.HeaderCell>
                         <Table.HeaderCell>Data</Table.HeaderCell>
+                        <Table.HeaderCell>Pole</Table.HeaderCell>
                         <Table.HeaderCell>Akcje</Table.HeaderCell>
                     </Table.Row>
                 </Table.Header>
@@ -97,6 +114,7 @@ export default observer(function SeasonDetailsOperationList({operations, seasonI
                             <Table.Cell>{operation.operationType === 'Earning' ? operation.value : 0}</Table.Cell>
                             <Table.Cell>{operation.operationType === 'Expense' ? operation.value : 0}</Table.Cell>
                             <Table.Cell>{format(operation.date!, 'dd MMM yyyy')}</Table.Cell>
+                            <Table.Cell>{operation.fieldNumber}</Table.Cell>
                             <Table.Cell>
                                 <Button icon='edit' onClick={() => handleEditOperation(operation)} />
                                 <Button icon='trash' onClick={() => handleDeleteOperation(operation.id)} />
@@ -110,13 +128,13 @@ export default observer(function SeasonDetailsOperationList({operations, seasonI
                         <Table.HeaderCell>Podsumowanie</Table.HeaderCell>
                         <Table.HeaderCell>{earnings}</Table.HeaderCell>
                         <Table.HeaderCell>{expenses}</Table.HeaderCell>
-                        <Table.HeaderCell colSpan={2} textAlign='center' >Dochód: 2000</Table.HeaderCell>
+                        <Table.HeaderCell colSpan={3} textAlign='center' >Dochód: {income}</Table.HeaderCell>
                     </Table.Row>
                 </Table.Header>
 
                 <Table.Footer>
                     <Table.Row>
-                        <Table.HeaderCell colSpan='5'>
+                        <Table.HeaderCell colSpan='6'>
                             <Button positive onClick={openModal} content='Dodaj operację' />
                         </Table.HeaderCell>
                     </Table.Row>
@@ -139,6 +157,12 @@ export default observer(function SeasonDetailsOperationList({operations, seasonI
                                     options={operationOptions}
                                     placeholder='OperationType'
                                     name='operationType'
+                                />
+                                <MySelectInput
+                                    options={fieldOptions}
+                                    placeholder='Choose Field'
+                                    name='fieldId'
+                                    label='Field'
                                 />
                                 <MyDateInput placeholderText='Date'
                                              name='date'

@@ -109,10 +109,14 @@ const Fields = {
 
 const Operations = {
     list: (params?: OperationParams) => {
-        if (!params || !params.seasonId) {
-            return axios.get<Operation[]>('/operations').then(responseBody);
-        } else {
+        if (params && params.seasonId) {
             return axios.get<Operation[]>(`/operations?seasonId=${params.seasonId}`).then(responseBody);
+        } else if (params && params.fieldId) {
+            return axios.get<Operation[]>(`/operations?fieldId=${params.fieldId}`).then(responseBody);
+        } else if (params && params.fieldId && params.seasonId) {
+            return axios.get<Operation[]>(`/operations?seasonId=${params.seasonId}&fieldId=${params.fieldId}`).then(responseBody);
+        } else {
+            return axios.get<Operation[]>('/operations').then(responseBody);
         }
     },
     create: (operation: Operation) => requests.post<CreateOperationResponse>(`/operations`, operation),

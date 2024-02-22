@@ -10,6 +10,7 @@ public sealed class Field : BaseEntity
     public Guid FarmId { get; set; }
     public Farm Farm { get; set; }
     public ICollection<Plant> Plants { get; set; }
+    public ICollection<Operation> Operations { get; set; }
 
     private Field(string location, float area, int number, Guid farmId)
     {

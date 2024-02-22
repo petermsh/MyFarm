@@ -22,6 +22,9 @@ internal sealed class BrowseOperationsHandler : IRequestHandler<BrowseOperations
 
         if (request.SeasonId.HasValue)
             query = query.Where(o => o.SeasonId == request.SeasonId);
+        
+        if (request.FieldId.HasValue)
+            query = query.Where(o => o.FieldId == request.FieldId);
 
         var operations = await query
             .Select(o => new OperationDto
@@ -31,6 +34,7 @@ internal sealed class BrowseOperationsHandler : IRequestHandler<BrowseOperations
                 OperationType = o.OperationType.GetDisplayName(),
                 Value = o.Value,
                 Date = o.Date,
+                FieldNumber = o.Field.Number,
                 CreatedAt = o.CreatedAt
             }).ToListAsync(cancellationToken);
 

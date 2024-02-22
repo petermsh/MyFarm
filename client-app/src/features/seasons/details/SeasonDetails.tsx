@@ -47,7 +47,7 @@ export default observer(function SeasonDetails() {
         <Grid>
             <Grid.Column width='14'>
                 <SeasonDetailsHeader season={season} />
-                <SeasonDetailsOperationList seasonId={season.id} operations={operations} />
+                <SeasonDetailsOperationList seasonId={season.id} operations={operations} farmId={season.farmId} />
             </Grid.Column>
         </Grid>
     );

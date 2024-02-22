@@ -14,12 +14,14 @@ export default class OperationStore {
         makeAutoObservable(this);
     }
 
-    loadOperations = async (seasonId?: string) => {
+    loadOperations = async (seasonId?: string, fieldId?: string) => {
         this.setLoadingInitial(true);
         try {
             let operations;
-            if (seasonId !== undefined) {
-                operations = await agent.Operations.list({ seasonId });
+            if (seasonId !== undefined && fieldId !== undefined) {
+                operations = await agent.Operations.list({ seasonId, fieldId });
+            } else if (seasonId !== undefined) {
+                operations = await agent.Operations.list({seasonId});
             } else {
                 operations = await agent.Operations.list();
             }

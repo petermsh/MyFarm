@@ -6,6 +6,7 @@ using Application.Modules.Operations.Queries.BrowseOperations;
 using Application.Modules.Operations.Queries.GetOperation;
 using Infrastructure.Modules.Seasons.Queries;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace API.Controllers;
@@ -23,10 +24,16 @@ public sealed class OperationsController : BaseApiController
     
     [HttpGet]
     [SwaggerOperation(Summary = "Browse Operations")]
-    public async Task<ActionResult<List<OperationDto>>> BrowseOperations([FromQuery(Name = "seasonId")] string? seasonId)
+    public async Task<ActionResult<List<OperationDto>>> BrowseOperations([FromQuery(Name = "seasonId")] string? seasonId, [FromQuery(Name = "fieldId")] string? fieldId)
     {
-        var query = seasonId is null ? new BrowseOperationsQuery() : new BrowseOperationsQuery { SeasonId = new Guid(seasonId) };
+        var query = new BrowseOperationsQuery();
+
+        if (seasonId is not null)
+            query.SeasonId = new Guid(seasonId);
         
+        if (fieldId is not null)
+            query.FieldId = new Guid(fieldId);
+
         var result = await Mediator.Send(query);
 
         return Ok(result);

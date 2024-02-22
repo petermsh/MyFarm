@@ -5,6 +5,8 @@ export interface Operation {
     operationType: string,
     value: number,
     seasonId?: string,
+    fieldId?: string,
+    fieldNumber?: number,
     date: Date | null
 }
 
