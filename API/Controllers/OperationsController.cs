@@ -3,6 +3,7 @@ using Application.Modules.Operations.Commands.CreateOperation;
 using Application.Modules.Operations.Commands.DeleteOperation;
 using Application.Modules.Operations.Commands.UpdateOperation;
 using Application.Modules.Operations.Queries.BrowseOperations;
+using Application.Modules.Operations.Queries.GetGroupedOperations;
 using Application.Modules.Operations.Queries.GetOperation;
 using Infrastructure.Modules.Seasons.Queries;
 using Microsoft.AspNetCore.Mvc;
@@ -35,6 +36,15 @@ public sealed class OperationsController : BaseApiController
             query.FieldId = new Guid(fieldId);
 
         var result = await Mediator.Send(query);
+
+        return Ok(result);
+    }
+    
+    [HttpGet("grouped/{fieldId:guid}")]
+    [SwaggerOperation(Summary = "Get grouped Operation")]
+    public async Task<ActionResult<List<GroupedOperationsResponse>>> GetGroupedOperations([FromRoute] Guid fieldId)
+    {
+        var result = await Mediator.Send(new GetGroupedOperationsQuery(fieldId));
 
         return Ok(result);
     }

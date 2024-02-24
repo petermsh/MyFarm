@@ -1,10 +1,11 @@
-﻿import {Operation} from "../models/operation";
+﻿import {GroupedOperation, Operation} from "../models/operation";
 import {makeAutoObservable, runInAction} from "mobx";
 import agent from "../api/agent";
 
 export default class OperationStore {
 
     operationRegistry = new Map<string, Operation>();
+    groupedOperationRegistry = new Map<string, GroupedOperation>();
     loadingInitial = false;
     selectedOperation?: Operation = undefined;
     editMode = false;
@@ -12,6 +13,7 @@ export default class OperationStore {
 
     constructor() {
         makeAutoObservable(this);
+        this.clearGroupedOperations = this.clearGroupedOperations.bind(this);
     }
 
     loadOperations = async (seasonId?: string, fieldId?: string) => {
@@ -32,6 +34,21 @@ export default class OperationStore {
         } catch (error) {
             console.log(error);
             this.setLoadingInitial(false);
+        }
+    }
+    
+    loadGroupedOperations = async(fieldId: string) => {
+        this.setLoadingInitial(true);
+        try {
+            let operations;
+            operations = await agent.Operations.groupedList(fieldId);
+            operations.forEach((operation: GroupedOperation) => {
+                this.setGroupedOperation(operation);
+            })
+            this.setLoadingInitial(false);
+        } catch (error) {
+             console.log(error);
+             this.setLoadingInitial(false);
         }
     }
 
@@ -56,6 +73,14 @@ export default class OperationStore {
     
     private setOperation = (operation: Operation) => {
         this.operationRegistry.set(operation.id, operation);
+    }
+    
+    private setGroupedOperation = (operation: GroupedOperation) => {
+        this.groupedOperationRegistry.set(operation.seasonName, operation);
+    }
+
+    clearGroupedOperations() {
+        this.groupedOperationRegistry.clear();
     }
     
 

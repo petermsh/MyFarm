@@ -30,3 +30,17 @@ export class Operation implements Operation {
 export interface CreateOperationResponse {
     operationId: string
 }
+
+export interface GroupedOperation {
+    seasonName: string;
+    plantName: string;
+    operations?: OperationDetailsDto[];
+}
+
+export interface OperationDetailsDto {
+    id: string;
+    name: string;
+    operationType: string;
+    value: number;
+    date: Date | null;
+}

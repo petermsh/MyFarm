@@ -6,7 +6,7 @@ import {toast} from "react-toastify";
 import {CreateFarmResponse, Farm, FarmListResponse} from "../models/farm";
 import {CreateSeasonResponse, Season} from "../models/season";
 import {CreateFieldResponse, Field} from "../models/field";
-import {CreateOperationResponse, Operation} from "../models/operation";
+import {CreateOperationResponse, GroupedOperation, Operation} from "../models/operation";
 
 
 const sleep = (delay: number) => {
@@ -119,6 +119,7 @@ const Operations = {
             return axios.get<Operation[]>('/operations').then(responseBody);
         }
     },
+    groupedList: (fieldId: string) => requests.get<GroupedOperation[]>(`/operations/grouped/${fieldId}`),
     create: (operation: Operation) => requests.post<CreateOperationResponse>(`/operations`, operation),
 }
 const Account = {
