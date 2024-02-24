@@ -21,6 +21,7 @@ export default observer (function FieldDetailedHeader({field}: Props) {
                     size='huge'
                     content={field.number}
                 />
+                {field.name}
                 <Button color="red" floated="right" onClick={() => setOpen(true)}>
                     Usuń
                 </Button>

@@ -22,6 +22,7 @@ export default observer(function FieldForm() {
 
     const [field, setField] = useState<Field>({
         id: '',
+        name: '',
         location: '',
         area: 0,
         number: 0,
@@ -30,6 +31,7 @@ export default observer(function FieldForm() {
 
     const validationSchema = Yup.object({
         location: Yup.string().required('The field location is required'),
+        name: Yup.string().required('The field name is required'),
         area: Yup.string().required('The field area is required'),
         number: Yup.string().required('The field number is required'),
         farmId: Yup.string().required('The Farm is required'),
@@ -71,6 +73,7 @@ export default observer(function FieldForm() {
                 {({ handleSubmit, isValid, isSubmitting, dirty }) => (
                     <Form className='ui form' onSubmit={handleSubmit} autoComplete='off'>
                         <MyTextInput name='location' placeholder='Location'/>
+                        <MyTextInput name='name' placeholder='Name'/>
                         <MyNumberInput name='area' placeholder='Area' label='Area' />
                         <MyNumberInput name='number' placeholder='Number' label='Number' />
                         <MySelectInput

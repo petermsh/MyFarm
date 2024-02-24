@@ -7,7 +7,7 @@ namespace Infrastructure.Persistence;
 
 internal static class DatabaseRegistration
 {
-    private const string SectionName = "database";
+    private const string SectionName = "database_prod";
 
     public static IServiceCollection AddPostgres(this IServiceCollection services, IConfiguration configuration)
     {
@@ -21,8 +21,6 @@ internal static class DatabaseRegistration
             sqlServerOptions.CommandTimeout(1);
         }));
         services.AddHostedService<DatabaseInitializer>();
-        
-        //AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
         return services;
     }

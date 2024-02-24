@@ -82,7 +82,7 @@ export default observer(function SeasonDetailsOperationList({operations, seasonI
     const fieldOptions = Array.from(fieldRegistry.values()).map(field => ({
         key: field.id,
         value: field.id,
-        text: field.number
+        text: field.name
     }));
     
     function handleEditOperation(operation: Operation) {

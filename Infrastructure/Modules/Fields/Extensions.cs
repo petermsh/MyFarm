@@ -9,6 +9,7 @@ public static class Extensions
         => new()
         {
             Id = entity.Id,
+            Name = entity.Name,
             Location = entity.Location,
             Area = entity.Area,
             Number = entity.Number,

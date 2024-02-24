@@ -27,6 +27,7 @@ internal sealed class BrowseFieldsHandler : IRequestHandler<BrowseFieldsQuery, L
         var fields = await query.Select(f => new FieldDto
             {
                 Id = f.Id,
+                Name = f.Name,
                 Area = f.Area,
                 Location = f.Location,
                 Number = f.Number,

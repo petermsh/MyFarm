@@ -15,7 +15,7 @@ internal sealed class CreateFieldHandler : IRequestHandler<CreateFieldCommand, C
 
     public async Task<CreateFieldResponse> Handle(CreateFieldCommand request, CancellationToken cancellationToken)
     {
-        var field = Field.Create(request.Location, request.Area, request.Number, new Guid(request.FarmId));
+        var field = Field.Create(request.Name, request.Location, request.Area, request.Number, new Guid(request.FarmId));
         
         await _fieldRepository.AddAsync(field, cancellationToken);
 
