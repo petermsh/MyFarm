@@ -21,7 +21,7 @@ interface Props {
 export default observer(function SeasonDetailsOperationList({operations, seasonId, farmId}: Props) {
     
     const { operationStore, fieldStore } = useStore();
-    const { handleDeleteOperation, createOperation, loading, loadOperations } = operationStore;
+    const { deleteOperation, createOperation, loading, loadOperations } = operationStore;
     const { loadFields, fieldRegistry } = fieldStore;
     const [showModal, setShowModal] = useState(false);
 
@@ -45,7 +45,7 @@ export default observer(function SeasonDetailsOperationList({operations, seasonI
     
     const income = earnings - expenses;
     
-    let [initialOperation] = useState<Operation>({
+    const [initialOperation, setInitialOperation] = useState<Operation>({
         id: '',
         name: '',
         operationType: '',
@@ -65,15 +65,11 @@ export default observer(function SeasonDetailsOperationList({operations, seasonI
     function handleFormSubmit(operation: Operation) {
         operation.seasonId = seasonId;
         console.log(operation);
-        createOperation(operation).then(() => closeModal());
+        createOperation(operation).then(() => {
+            loadOperations(seasonId);
+            closeModal();
+        });
     }
-
-    useEffect(() => {
-        console.log("useEffect");
-        if (!showModal) { // Sprawdzenie, czy modal został zamknięty
-            loadOperations(seasonId); // Wywołanie funkcji odświeżającej dane
-        }
-    }, [showModal]);
 
     useEffect(() => {
         loadFields(farmId);
@@ -85,8 +81,10 @@ export default observer(function SeasonDetailsOperationList({operations, seasonI
         text: field.name
     }));
     
+    console.log(fieldOptions);
+
     function handleEditOperation(operation: Operation) {
-        initialOperation = operation;
+        setInitialOperation(operation);
         openModal();
     }
 
@@ -117,7 +115,7 @@ export default observer(function SeasonDetailsOperationList({operations, seasonI
                             <Table.Cell>{operation.fieldNumber}</Table.Cell>
                             <Table.Cell>
                                 <Button icon='edit' onClick={() => handleEditOperation(operation)} />
-                                <Button icon='trash' onClick={() => handleDeleteOperation(operation.id)} />
+                                <Button icon='trash' onClick={() => deleteOperation(operation.id)} />
                             </Table.Cell>
                         </Table.Row>
                     ))}

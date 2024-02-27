@@ -7,7 +7,7 @@ namespace Infrastructure.Persistence;
 
 internal static class DatabaseRegistration
 {
-    private const string SectionName = "database_prod";
+    private const string SectionName = "database";
 
     public static IServiceCollection AddPostgres(this IServiceCollection services, IConfiguration configuration)
     {

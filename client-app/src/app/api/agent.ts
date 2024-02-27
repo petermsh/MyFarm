@@ -121,6 +121,7 @@ const Operations = {
     },
     groupedList: (fieldId: string) => requests.get<GroupedOperation[]>(`/operations/grouped/${fieldId}`),
     create: (operation: Operation) => requests.post<CreateOperationResponse>(`/operations`, operation),
+    delete: (id: string) => requests.delete<void>(`/operations/${id}`)
 }
 const Account = {
     current: () => requests.get<User>('account'),

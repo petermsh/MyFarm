@@ -88,8 +88,15 @@ export default class OperationStore {
         this.loadingInitial = state;
     }
 
-    handleDeleteOperation = (operationId: string) => {
-        // Obsługa usuwania operacji
-        console.log(`Usuwanie operacji o id: ${operationId}`);
+    deleteOperation = async(id: string) => {
+        this.loading = true;
+        try {
+            await agent.Operations.delete(id);
+            this.operationRegistry.delete(id);
+            runInAction(() => this.loading = false);
+        } catch (error) {
+            console.log(error);
+            runInAction(() => this.loading = false);
+        }
     }
 }
